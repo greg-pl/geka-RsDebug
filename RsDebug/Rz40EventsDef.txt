@@ -1,0 +1,431 @@
+0065 : XD1-1 - input                                      UP
+0066 : XD1-1 - input                                      DN
+0067 : XD1-2 - input                                      UP
+0068 : XD1-2 - input                                      DN
+0069 : XD1-3 - input                                      UP
+006A : XD1-3 - input                                      DN
+006B : XD1-4 - input                                      UP
+006C : XD1-4 - input                                      DN
+006D : XD1-5 - input                                      UP
+006E : XD1-5 - input                                      DN
+006F : XD1-6 - input                                      UP
+0070 : XD1-6 - input                                      DN
+0071 : XD1-7 - input                                      UP
+0072 : XD1-7 - input                                      DN
+0073 : XD1-8 - input                                      UP
+0074 : XD1-8 - input                                      DN
+0075 : XD1-9 - input                                      UP
+0076 : XD1-9 - input                                      DN
+0077 : XD1-10 - input                                     UP
+0078 : XD1-10 - input                                     DN
+0079 : XD1-11 - input                                     UP
+007A : XD1-11 - input                                     DN
+007B : XD1-12 - input                                     UP
+007C : XD1-12 - input                                     DN
+007D : XD1-13 - input                                     UP
+007E : XD1-13 - input                                     DN
+007F : XD1-14 - input                                     UP
+0080 : XD1-14 - input                                     DN
+00C9 : XD2-1 - input                                      UP
+00CA : XD2-1 - input                                      DN
+00CB : XD2-2 - input                                      UP
+00CC : XD2-2 - input                                      DN
+00CD : XD2-3 - input                                      UP
+00CE : XD2-3 - input                                      DN
+00CF : XD2-4 - input                                      UP
+00D0 : XD2-4 - input                                      DN
+00D1 : XD2-5 - input                                      UP
+00D2 : XD2-5 - input                                      DN
+00D3 : XD2-6 - input                                      UP
+00D4 : XD2-6 - input                                      DN
+00D5 : XD2-7 - input                                      UP
+00D6 : XD2-7 - input                                      DN
+00D7 : XD2-8 - input                                      UP
+00D8 : XD2-8 - input                                      DN
+00D9 : XD2-9 - input                                      UP
+00DA : XD2-9 - input                                      DN
+00DB : XD2-10 - input                                     UP
+00DC : XD2-10 - input                                     DN
+00DD : XD2-11 - input                                     UP
+00DE : XD2-11 - input                                     DN
+00DF : XD2-12 - input                                     UP
+00E0 : XD2-12 - input                                     DN
+00E1 : XD2-13 - input                                     UP
+00E2 : XD2-13 - input                                     DN
+00E3 : XD2-14 - input                                     UP
+00E4 : XD2-14 - input                                     DN
+012D : XD3-1 - input                                      UP
+012E : XD3-1 - input                                      DN
+012F : XD3-2 - input                                      UP
+0130 : XD3-2 - input                                      DN
+0131 : XD3-3 - input                                      UP
+0132 : XD3-3 - input                                      DN
+0133 : XD3-4 - input                                      UP
+0134 : XD3-4 - input                                      DN
+0135 : XD3-5 - input                                      UP
+0136 : XD3-5 - input                                      DN
+0137 : XD3-6 - input                                      UP
+0138 : XD3-6 - input                                      DN
+0139 : XD3-7 - input                                      UP
+013A : XD3-7 - input                                      DN
+013B : XD3-8 - input                                      UP
+013C : XD3-8 - input                                      DN
+013D : XD3-9 - input                                      UP
+013E : XD3-9 - input                                      DN
+013F : XD3-10 - input                                     UP
+0140 : XD3-10 - input                                     DN
+0141 : XD3-11 - input                                     UP
+0142 : XD3-11 - input                                     DN
+0143 : XD3-12 - input                                     UP
+0144 : XD3-12 - input                                     DN
+0145 : XD3-13 - input                                     UP
+0146 : XD3-13 - input                                     DN
+0147 : XD3-14 - input                                     UP
+0148 : XD3-14 - input                                     DN
+0191 : XD4-1 - input                                      UP
+0192 : XD4-1 - input                                      DN
+0193 : XD4-2 - input                                      UP
+0194 : XD4-2 - input                                      DN
+0195 : XD4-3 - input                                      UP
+0196 : XD4-3 - input                                      DN
+0197 : XD4-4 - input                                      UP
+0198 : XD4-4 - input                                      DN
+0199 : XD4-5 - input                                      UP
+019A : XD4-5 - input                                      DN
+019B : XD4-6 - input                                      UP
+019C : XD4-6 - input                                      DN
+019D : XD4-7 - input                                      UP
+019E : XD4-7 - input                                      DN
+019F : XD4-8 - input                                      UP
+01A0 : XD4-8 - input                                      DN
+01A1 : XD4-9 - input                                      UP
+01A2 : XD4-9 - input                                      DN
+01A3 : XD4-10 - input                                     UP
+01A4 : XD4-10 - input                                     DN
+01A5 : XD4-11 - input                                     UP
+01A6 : XD4-11 - input                                     DN
+01A7 : XD4-12 - input                                     UP
+01A8 : XD4-12 - input                                     DN
+01A9 : XD4-13 - input                                     UP
+01AA : XD4-13 - input                                     DN
+01AB : XD4-14 - input                                     UP
+01AC : XD4-14 - input                                     DN
+01F5 : XD5-1 - input                                      UP
+01F6 : XD5-1 - input                                      DN
+01F7 : XD5-2 - input                                      UP
+01F8 : XD5-2 - input                                      DN
+01F9 : XD5-3 - input                                      UP
+01FA : XD5-3 - input                                      DN
+01FB : XD5-4 - input                                      UP
+01FC : XD5-4 - input                                      DN
+01FD : XD5-5 - input                                      UP
+01FE : XD5-5 - input                                      DN
+01FF : XD5-6 - input                                      UP
+0200 : XD5-6 - input                                      DN
+0201 : XD5-7 - input                                      UP
+0202 : XD5-7 - input                                      DN
+0203 : XD5-8 - input                                      UP
+0204 : XD5-8 - input                                      DN
+0205 : XD5-9 - input                                      UP
+0206 : XD5-9 - input                                      DN
+0207 : XD5-10 - input                                     UP
+0208 : XD5-10 - input                                     DN
+0209 : XD5-11 - input                                     UP
+020A : XD5-11 - input                                     DN
+020B : XD5-12 - input                                     UP
+020C : XD5-12 - input                                     DN
+020D : XD5-13 - input                                     UP
+020E : XD5-13 - input                                     DN
+020F : XD5-14 - input                                     UP
+0210 : XD5-14 - input                                     DN
+0259 : XD6-1 - input                                      UP
+025A : XD6-1 - input                                      DN
+025B : XD6-2 - input                                      UP
+025C : XD6-2 - input                                      DN
+025D : XD6-3 - input                                      UP
+025E : XD6-3 - input                                      DN
+025F : XD6-4 - input                                      UP
+0260 : XD6-4 - input                                      DN
+0261 : XD6-5 - input                                      UP
+0262 : XD6-5 - input                                      DN
+0263 : XD6-6 - input                                      UP
+0264 : XD6-6 - input                                      DN
+0265 : XD6-7 - input                                      UP
+0266 : XD6-7 - input                                      DN
+0267 : XD6-8 - input                                      UP
+0268 : XD6-8 - input                                      DN
+0269 : XD6-9 - input                                      UP
+026A : XD6-9 - input                                      DN
+026B : XD6-10 - input                                     UP
+026C : XD6-10 - input                                     DN
+026D : XD6-11 - input                                     UP
+026E : XD6-11 - input                                     DN
+026F : XD6-12 - input                                     UP
+0270 : XD6-12 - input                                     DN
+0271 : XD6-13 - input                                     UP
+0272 : XD6-13 - input                                     DN
+0273 : XD6-14 - input                                     UP
+0274 : XD6-14 - input                                     DN
+0BB9 : TA1 - Trigger                                      UP
+0BBA : TA1 - Trigger                                      DN
+0BBB : TA2 - Trigger                                      UP
+0BBC : TA2 - Trigger                                      DN
+0BBD : TA3 - Trigger                                      UP
+0BBE : TA3 - Trigger                                      DN
+0BBF : TA4 - Trigger                                      UP
+0BC0 : TA4 - Trigger                                      DN
+0BC1 : TA5 - Trigger                                      UP
+0BC2 : TA5 - Trigger                                      DN
+0BC3 : TA6 - Trigger                                      UP
+0BC4 : TA6 - Trigger                                      DN
+0BC5 : TA7 - Trigger                                      UP
+0BC6 : TA7 - Trigger                                      DN
+0BC7 : TA8 - Trigger                                      UP
+0BC8 : TA8 - Trigger                                      DN
+0BC9 : TA9 - Trigger                                      UP
+0BCA : TA9 - Trigger                                      DN
+0BCB : TA10 - Trigger                                     UP
+0BCC : TA10 - Trigger                                     DN
+0BCD : TA11 - Trigger                                     UP
+0BCE : TA11 - Trigger                                     DN
+0BCF : TA12 - Trigger                                     UP
+0BD0 : TA12 - Trigger                                     DN
+0BD1 : TA13 - Trigger                                     UP
+0BD2 : TA13 - Trigger                                     DN
+0BD3 : TA14 - Trigger                                     UP
+0BD4 : TA14 - Trigger                                     DN
+0BD5 : TA15 - Trigger                                     UP
+0BD6 : TA15 - Trigger                                     DN
+0BD7 : TA16 - Trigger                                     UP
+0BD8 : TA16 - Trigger                                     DN
+0C1D : TB1 - Trigger                                      UP
+0C1E : TB1 - Trigger                                      DN
+0C1F : TB2 - Trigger                                      UP
+0C20 : TB2 - Trigger                                      DN
+0C21 : TB3 - Trigger                                      UP
+0C22 : TB3 - Trigger                                      DN
+0C23 : TB4 - Trigger                                      UP
+0C24 : TB4 - Trigger                                      DN
+0C25 : TB5 - Trigger                                      UP
+0C26 : TB5 - Trigger                                      DN
+0C27 : TB6 - Trigger                                      UP
+0C28 : TB6 - Trigger                                      DN
+0C29 : TB7 - Trigger                                      UP
+0C2A : TB7 - Trigger                                      DN
+0C2B : TB8 - Trigger                                      UP
+0C2C : TB8 - Trigger                                      DN
+0FA1 : L4 - Logic                                         UP
+0FA2 : L4 - Logic                                         DN
+0FA3 : L3 - Logic                                         UP
+0FA4 : L3 - Logic                                         DN
+0FA5 : L2 - Logic                                         UP
+0FA6 : L2 - Logic                                         DN
+0FA7 : L1 - Logic                                         UP
+0FA8 : L1 - Logic                                         DN
+7531 : Test events.                                       
+7532 : Delete log register.                               
+7534 : Switch on.                                         
+7535 : Restart.                                           
+7536 : DSP ? event lost                                   
+7537 : Loading settings from disk                         
+7538 : Save settings to disk                              
+7539 : DSP Start error                                    
+753A : Idle task error                                    
+753B : Communication task error                           
+753C : Shell task error                                   
+753D : System task error                                  
+753E : Alphanumeric console task error                    
+753F : Trend recorder task error                          
+7540 : Disturbance task error                             
+7541 : Lost of events - lock                              
+7542 : Lost of events - unlock                            
+7543 : Start status recorder                              
+7544 : Start disturbance recorder                         
+7545 : Start trends recorder                              
+7546 : End of Status recorder                             
+7547 : End of Disturbance recorder ä                      
+7548 : End of Trends recorder                             
+7549 : End of Status recorder recordings                  
+754A : End of Disturbance recorder recordings             
+754B : End of Trends recorder recordings                  
+754C : Status recorder ready                              
+754D : Disturbance recorder ready                         
+754E : Trend recorder ready                               
+754F : Triger from friend                                 
+7550 : Triger from local input                            
+7553 : SystemEx task error                                
+7554 : Time synchronization lost                          
+7555 : Time synchronization recovered                     
+7556 : IDLE thread error                                  
+7557 : Communication thread error                         
+7558 : WatchDog thread error                              
+7559 : Shell thread error                                 
+755A : System thread error                                
+755B : LCD thread error                                   
+755C : Trends recorder thread error                       
+755D : Fault recorder thread error                        
+755E : Fault recorder. File open error for writting d     
+755F : Trends recorder. File open error for writting d    
+7560 : State recorder. File open error for writting dat   
+7562 : Event FltDbg1                                      
+7563 : Event FltDbg2                                      
+7564 : Event FltDbg3                                      
+7565 : Event FltDbg4                                      
+7566 : Event FltDbg5                                      
+7567 : Event FltDbg6                                      
+7594 : Load defaults (Front panel)                        
+7595 : Load defaults (local port)                         
+7596 : Load defaults (network)                            
+7597 : Load defaults (UDP console)                        
+7598 : Load defaults (BECK)                               
+7599 : Load defaults (Internal)                           
+759A : Save settings (Front panel)                        
+759B : Save settings (local port)                         
+759C : Save settings (network)                            
+759D : Save settings (UDP console)                        
+759E : Save settings (BECK)                               
+759F : Save settings (Internal)                           
+75A0 : Lock (Front panel)                                 
+75A1 : Lock (local port)                                  
+75A2 : Lock (network)                                     
+75A3 : Lock (UDP console)                                 
+75A4 : Lock (BECK)                                        
+75A5 : Lock (Internal)                                    
+75A6 : Unlock (Front panel)                               
+75A7 : Unlock (local port)                                
+75A8 : Unlock (network)                                   
+75A9 : Unlock (UDP console)                               
+75AA : Unlock (BECK)                                      
+75AB : Unlock (Internal)                                  
+75AC : Test Mode On (Front panel)                         
+75AD : Test Mode On (local port)                          
+75AE : Test Mode On (network)                             
+75AF : Test Mode On (UDP console)                         
+75B0 : Test Mode On (BECK)                                
+75B1 : Test Mode On (Internal)                            
+75B2 : Test Mode off (Front panel)                        
+75B3 : Test Mode off (local port)                         
+75B4 : Test Mode off (network)                            
+75B5 : Test Mode off (UDP console)                        
+75B6 : Test Mode off (BECK)                               
+75B7 : Test Mode off (Internal)                           
+75B8 : Clear events memory (Front panel)                  
+75B9 : Clear events memory (local port)                   
+75BA : Clear events memory (network)                      
+75BB : Clear events memory (UDP console)                  
+75BC : Clear events memory (BECK)                         
+75BD : Clear events memory (Internal)                     
+75BE : Reset test memory (Front panel)                    
+75BF : Reset test memory (local port)                     
+75C0 : Reset test memory (network)                        
+75C1 : Reset test memory (UDP console)                    
+75C2 : Reset test memory (BECK)                           
+75C3 : Reset test memory (Internal)                       
+75C4 : Clear of Status Recorder (Front panel)             
+75C5 : Clear of Status Recorder (local port)              
+75C6 : Clear of Status Recorder (network)                 
+75C7 : Clear of Status Recorder (UDP console)             
+75C8 : Clear of Status Recorder (BECK)                    
+75C9 : Clear of Status Recorder (Internal)                
+75CA : Start Status Recorder (Front panel)                
+75CB : Start Status Recorder (local port)                 
+75CC : Start Status Recorder (network)                    
+75CD : Start Status Recorder (UDP console)                
+75CE : Start Status Recorder (BECK)                       
+75CF : Start Status Recorder (Internal)                   
+75D0 : Clear Trends Recorder (Front panel)                
+75D1 : Clear Trends Recorder (local port)                 
+75D2 : Clear Trends Recorder (network)                    
+75D3 : Clear Trends Recorder (UDP console)                
+75D4 : Clear Trends Recorder (BECK)                       
+75D5 : Clear Trends Recorder (Internal)                   
+75D6 : Start Trends Recorder (Front panel)                
+75D7 : Start Trends Recorder (local port)                 
+75D8 : Start Trends Recorder (network)                    
+75D9 : Start Trends Recorder (UDP console)                
+75DA : Start Trends Recorder (BECK)                       
+75DB : Start Trends Recorder (Associated recorder)        
+75DC : Clear of Disturbance Recorder (Front panel)        
+75DD : Clear of Disturbance Recorder (local port)         
+75DE : Clear of Disturbance Recorder (network)            
+75DF : Clear of Disturbance Recorder (UDP console)        
+75E0 : Clear of Disturbance Recorder (BECK)               
+75E1 : Clear of Disturbance Recorder (Interna)            
+75E2 : Start Disturbance Recorder (Front panel)           
+75E3 : Start Disturbance Recorder (local port)            
+75E4 : Start Disturbance Recorder (network)               
+75E5 : Start Disturbance Recorder (UDP console)           
+75E6 : Start Disturbance Recorder (BECK)                  
+75E7 : Start Disturbance Recorder (Associated recor)      
+75E8 : Login: User (Front panel)                          
+75E9 : Login: User (local port)                           
+75EA : Login: User (network)                              
+75EB : Login: User (UDP console)                          
+75EC : Login: User (BECK)                                 
+75ED : Login: User (Internal)                             
+75EE : Login: Admin (Front panel)                         
+75EF : Login: Admin (local port)                          
+75F0 : Login: Admin (network)                             
+75F1 : Login: Admin (UDP console)                         
+75F2 : Login: Admin (BECK)                                
+75F3 : Login: Admin (Internal)                            
+75F4 : Login: Manufacturer (Front panel)                  
+75F5 : Login: Manufacturer (local port)                   
+75F6 : Login: Manufacturer (network)                      
+75F7 : Login: Manufacturer (UDP console)                  
+75F8 : Login: Manufacturer (BECK)                         
+75F9 : Login: Manufacturer (Internal)                     
+75FA : Log out (Front panel)                              
+75FB : Log out (local port)                               
+75FC : Log out (network)                                  
+75FD : Log out (UDP console)                              
+75FE : Log out (BECK)                                     
+75FF : Log out (Internal)                                 
+7600 : Time set (Front panel)                             
+7601 : Time set (local port)                              
+7602 : Time set (network)                                 
+7603 : Time set (UDP console)                             
+7604 : Time set (BECK)                                    
+7605 : Time set (Internal)                                
+7918 : Power supply                                       Failure
+7919 : Supply +15V                                        Failure
+791A : Supply -15V                                        Failure
+791B : DSP CPU                                            Failure
+791C : Proc. DSP(cnt)                                     Failure
+791D : Proc. DSP(Soft)                                    Failure
+791E : CF card                                            Failure
+791F : time synch.                                        Failure
+7920 : IO CARD                                            Failure
+7921 : Recorder blocked                                   Failure
+7AA8 : CPU Temp. > -10 [deg]                              
+7AA9 : CPU Temp. < -12 [deg]                              
+7AAA : CPU Temp. > -5 [deg]                               
+7AAB : CPU Temp. < -7 [deg]                               
+7AAC : CPU Temp. > 0 [deg]                                
+7AAD : CPU Temp. < -2 [deg]                               
+7AAE : CPU Temp. > 10 [deg]                               
+7AAF : CPU Temp. < 8 [deg]                                
+7AB0 : CPU Temp. > 20 [deg]                               
+7AB1 : CPU Temp. < 18 [deg]                               
+7AB2 : CPU Temp. > 30 [deg]                               
+7AB3 : CPU Temp. < 28 [deg]                               
+7AB4 : CPU Temp. > 40 [deg]                               
+7AB5 : CPU Temp. < 38 [deg]                               
+7AB6 : CPU Temp. > 50 [deg]                               
+7AB7 : CPU Temp. < 48 [deg]                               
+7AB8 : CPU Temp. > 55 [deg]                               
+7AB9 : CPU Temp. < 53 [deg]                               
+7ABA : CPU Temp. > 60 [deg]                               
+7ABB : CPU Temp. < 58 [deg]                               
+7ABC : CPU Temp. > 65 [deg]                               
+7ABD : CPU Temp. < 63 [deg]                               
+7ABE : CPU Temp. > 70 [deg]                               
+7ABF : CPU Temp. < 68 [deg]                               
+7AC0 : CPU Temp. > 75 [deg]                               
+7AC1 : CPU Temp. < 73 [deg]                               
+7AC2 : CPU Temp. > 80 [deg]                               
+7AC3 : CPU Temp. < 78 [deg]                               
+7AC4 : CPU Temp. > 85 [deg]                               
+7AC5 : CPU Temp. < 83 [deg]                               
+7AC6 : CPU Temp. > 90 [deg]                               
+7AC7 : CPU Temp. < 88 [deg]                               

@@ -1,0 +1,32 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = RsDebug.exe MBusCom.cmm RsdCom.cmm RsdTcp.cmm mdbtcp.cmm
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+RsDebug.exe: RsDebug.dpr
+  $(DCC)
+
+MBusCom.cmm: ..\EtManager\MbusCom\MBusCom.dpr
+  $(DCC)
+
+RsdCom.cmm: ..\EtManager\RsdCom\RsdCom.dpr
+  $(DCC)
+
+RsdTcp.cmm: ..\EtManager\RsdTcp\RsdTcp.dpr
+  $(DCC)
+
+mdbtcp.cmm: ..\EtManager\MdbTcp\mdbtcp.dpr
+  $(DCC)
+
+
