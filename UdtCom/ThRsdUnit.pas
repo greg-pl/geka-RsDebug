@@ -39,7 +39,7 @@ const
   LibPropertyStr : string =
     '<?xml version="1.0" standalone="yes"?>'+
     '<LIB_DESCR>'+
-      '<INFO TYPE="RS" DESCR="Port RS (protocol Modbus+)" SIGN="MCOM"/>'+
+      '<INFO TYPE="RS" DESCR="Port RS (protocol Modbus_Udt)" SIGN="UMDB"/>'+
       '<PARAMS>'+
         '<PARAM DESCR="Port number" TYPE="COM_NR" DEFAULT="1" />'+
         '<PARAM DESCR="Device number" TYPE="BYTE" DEFAULT="255"/>'+
@@ -51,7 +51,7 @@ const
   LibPropertyStrV2 : string =
     '<?xml version="1.0" standalone="yes"?>'+
     '<CMM_DESCR>'+
-      '<CMM_INFO TYPE="RS" DESCR="Port RS (protocol Modbus+)" SIGN="MCOM"/>'+
+      '<CMM_INFO TYPE="RS" DESCR="Port RS (protocol Modbus_Udt)" SIGN="UMDB"/>'+
       '<GROUP>'+
         '<ITEM NAME="COM" TYPE="COM_NR" DESCR="Port number" DEFVALUE="1" />'+
         '<ITEM NAME="DEV_NR" TYPE="INT" DESCR="Device number" DEFVALUE="1" MIN="1" MAX="240" />'+
