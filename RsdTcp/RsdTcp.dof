@@ -126,18 +126,16 @@ CodePage=1250
 [Version Info Keys]
 CompanyName=
 FileDescription=
-[HistoryLists\hlDebugSourcePath]
-Count=1
-Item0=C:\!!work\dcomp\XML3
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=4
-Item0=C:\!!Work\dcomp;C:\!!Work\dcomp\XmlLight;C:\!!Work\dcomp\inc
-Item1=C:\!!work\dcomp;C:\!!work\dcomp\XML3
-Item2=C:\!!work\dcomp\XML3
-Item3=C:\!!work\dcomp\GkComp
-[HistoryLists\hlOutputDirectorry]
 Count=1
+Item0=C:\ProgramFilesGK\Borland\Delphi7\Source\Vcl
+[HistoryLists\hlUnitOutputDirectory]
+Count=1
+Item0=DCU
+[HistoryLists\hlOutputDirectorry]
+Count=2
 Item0=X:\
+Item1=DCU

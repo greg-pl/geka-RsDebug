@@ -2,3 +2,4 @@
 *.identcache
 *.stat
 *.local
+*.~*
