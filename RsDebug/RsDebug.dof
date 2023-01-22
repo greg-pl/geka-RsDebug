@@ -104,7 +104,7 @@ RunParams=
 HostApplication=
 Launcher=
 UseLauncher=0
-DebugCWD=D:\!!Work\!Exe
+DebugCWD=D:\tmp
 [Language]
 ActiveLang=
 ProjectLang=

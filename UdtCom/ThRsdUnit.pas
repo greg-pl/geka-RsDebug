@@ -123,34 +123,8 @@ function  WrReg(Id :TAccId; Adress : word; Val : word):TStatus; stdcall;
 function  WrMultiReg(Id :TAccId; var Buf; Adress : word; Count :word):TStatus; stdcall;
 
 // odczyt, zapis pamiêci
-function  ReadS(Id :TAccId; var S; var Vec : Cardinal): TStatus; stdcall;
 function  ReadMem(Id :TAccId; var Buffer; adr : Cardinal; size : Cardinal): TStatus; stdcall;
 function  WriteMem(Id :TAccId; var Buffer; adr : Cardinal; Size : Cardinal): TStatus; stdcall;
-function  WriteCtrl(Id :TAccId; nr: byte; b: byte): TStatus; stdcall;
-function  ReadCtrl(Id :TAccId; nr : byte; var b : byte): TStatus; stdcall;
-
-//obsluga terminala
-function  TerminalSendKey(Id :TAccId; key : char):TStatus; stdcall;
-function  TerminalRead(Id :TAccId; buf : pchar; var rdcnt : integer):TStatus; stdcall;
-
-
-// dostep do sesji i plików
-
-function  SeOpenSesion(Id :TAccId; var SesId : TSesID) : TStatus; stdcall;
-function  SeCloseSesion(Id :TAccId; SesId : TSesID) : TStatus; stdcall;
-function  SeOpenFile(Id :TAccId; SesId : TSesID; FName : pchar; Mode : byte; var FileNr : TFileNr):TStatus; stdcall;
-function  SeGetDir(Id :TAccId; SesId : TSesID; FName : pchar; Attrib : byte; Buffer : pchar; MaxLen : integer):TStatus; stdcall;
-function  SeGetDrvList(Id :TAccId; SesId : TSesID; DrvList : pchar):TStatus; stdcall;
-function  SeShell(Id :TAccId; SesId : TSesID; Command : pchar; ResultStr : pchar; MaxLen : integer):TStatus; stdcall;
-function  SeGetGuidEx(Id :TAccId; SesId : TSesID; FileName : pchar; var Guid : TSeGuid):TStatus; stdcall;
-function  SeReadFileEx(Id :TAccId; SesId : TSesID; FileName : pchar; autoclose: boolean; var buf;
-              var size: integer; var FileNr: TFileNr):TStatus; stdcall;
-function  SeReadFile(Id :TAccId; SesId : TSesID;  FileNr : TFileNr; var buf; var Cnt : integer):TStatus; stdcall;
-function  SeWriteFile(Id :TAccId;  SesId : TSesID; FileNr : TFileNr; const buf; var Cnt : integer):TStatus; stdcall;
-function  SeSeek(Id :TAccId;  SesId : TSesID; FileNr : TFileNr; Offset  : integer; Orgin : byte; var Pos : integer):TStatus; stdcall;
-function  SeGetFileSize(Id :TAccId;  SesId : TSesID; FileNr : TFileNr; var FileSize : integer):TStatus; stdcall;
-function  SeCloseFile(Id :TAccId; SesId : TSesID;  FileNr : TFileNr):TStatus; stdcall;
-function  SeGetGuid(Id :TAccId; SesId : TSesID;  FileNr : TFileNr; var Guid : TSeGuid):TStatus; stdcall;
 
 
 
@@ -179,33 +153,13 @@ Exports
     WrReg,
     WrMultiReg,
 
-    ReadS,
     ReadMem,
     WriteMem,
-    WriteCtrl,
-    ReadCtrl,
     GetErrStr,
     GetDrvParamList,
     GetDrvStatus,
-    SetDrvParam,
+    SetDrvParam;
 
-    TerminalSendKey,
-    TerminalRead,
-
-    SeOpenSesion,
-    SeCloseSesion,
-    SeOpenFile,
-    SeGetDir,
-    SeGetDrvList,
-    SeShell,
-    SeReadFile,
-    SeWriteFile,
-    SeSeek,
-    SeGetFileSize,
-    SeCloseFile,
-    SeGetGuid,
-    SeGetGuidEx,
-    SeReadFileEx;
 
 
 
@@ -214,7 +168,7 @@ implementation
 uses Math;
 
 const
-  MAX_MDB_FRAME_SIZE = 240;
+  MAX_MDB_FRAME_SIZE = 128;
   MAX_MDB_STD_FRAME_SIZE = 112;
 
 type
@@ -295,11 +249,6 @@ type
     function  GetLongInt(const b):cardinal;
     procedure SetLongInt(const b; Val :cardinal);
     function  GetDWord(const b):cardinal;
-    //procedure SetDWord(const b; Val :cardinal);
-    function  SeGetDirHd(First : boolean; SesId : TSesID; FName : pchar; Attrib : byte;
-       Buffer : pchar; MaxLen : integer; var Len : integer):TStatus;
-    function  SeReadFileHd(SesId : TSesID;  FileNr : TFileNr; var buf; var Cnt : integer):TStatus;
-    function  SeWriteFileHd(SesId : TSesID; FileNr : TFileNr; const buf; var Cnt : integer):TStatus;
   protected
     procedure  GoBackFunct(Ev: integer; R: real);
     procedure  SetProgress(F: real); overload;
@@ -329,6 +278,7 @@ type
     function    SetBreakFlag(Val: boolean) : TStatus;
     function    GetDrvStatus(ParamName : pchar; ParamValue :pchar; MaxRpl:integer): TStatus;
     function    SetDrvParam(ParamName : pchar; ParamValue :pchar): TStatus;
+    function    GetErrStr(Code :TStatus; Buffer : pchar; MaxLen : integer):boolean;
 
     procedure   RegisterCallBackFun(ACallBackFunc : TCallBackFunc; CmmId : integer);
     // funkcje podstawowe Modbusa
@@ -343,33 +293,6 @@ type
     // odczyt, zapis pamiêci
     function    RdMemory(var Buf; Adress : cardinal; Count :cardinal):TStatus;
     function    WrMemory(const Buf; Adress : cardinal; Count :cardinal):TStatus;
-    function    RdDevInfo(DevName : pchar; var TabVec: cardinal): TStatus;
-    function    RdCtrlByte(Nr: byte; var Val : byte):TStatus;
-    function    WrCtrlByte(Nr: byte; Val : byte):TStatus;
-
-    //obsluga terminala
-    function    TerminalSendKey(key : char):TStatus;
-    function    TerminalRead(buf : pchar; var rdcnt : integer):TStatus;
-
-    // dostep do sesji i plików
-    function  GetErrStr(Code :TStatus; Buffer : pchar; MaxLen : integer):boolean;
-    function  SeOpenSesion(var SesId : TSesID) : TStatus;
-    function  SeCloseSesion(SesId : TSesID) : TStatus;
-    function  SeOpenFile(SesId : TSesID; FName : pchar; Mode : byte; var FileNr : TFileNr):TStatus;
-    function  SeGetDir(SesId : TSesID; FName : pchar; Attrib : byte; Buffer : pchar; MaxLen : integer):TStatus;
-
-
-    function  SeGetDrvList(SesId : TSesID; DrvList : pchar):TStatus;
-    function  SeShell(SesId : TSesID; Command : pchar; ResultStr : pchar; MaxLen : integer):TStatus;
-    function  SeGetGuidEx(SesId : TSesID; FileName : pchar; var Guid : TSeGuid):TStatus;
-    function  SeReadFileEx(SesId : TSesID; FileName : pchar; autoclose: boolean; var buf;
-              var size: integer; var FileNr: TFileNr):TStatus;
-    function  SeReadFile(SesId : TSesID;  FileNr : TFileNr; var buf; var Cnt : integer):TStatus;
-    function  SeWriteFile(SesId : TSesID; FileNr : TFileNr; const buf; var Cnt : integer):TStatus;
-    function  SeSeek(SesId : TSesID; FileNr : TFileNr; Offset  : integer; Orgin : byte; var Pos : integer):TStatus;
-    function  SeGetFileSize(SesId : TSesID; FileNr : TFileNr; var FileSize : integer):TStatus;
-    function  SeCloseFile(SesId : TSesID;  FileNr : TFileNr):TStatus;
-    function  SeGetGuid(SesId : TSesID;  FileNr : TFileNr; var Guid : TSeGuid):TStatus;
   end;
 
 
@@ -491,15 +414,13 @@ begin
   DCB.DCBlength := SizeOf(DCB);
   DCB.Flags    := DCB.Flags or dcb_Binary;
   if FParity<>paNONE then
-  begin
     DCB.Flags    := DCB.Flags or dcb_Parity;
-    if FParity=paEVEN then
-      DCB.Parity   := EVENPARITY;
-    if FParity=paODD then
-      DCB.Parity   := ODDPARITY;
-  end
+  case FParity of
+  paEVEN :  DCB.Parity   := EVENPARITY;
+  paODD  :  DCB.Parity   := ODDPARITY;
   else
     DCB.Parity   := NOPARITY;
+  end;
   DCB.StopBits := ONESTOPBIT;
   case BaudRate of
     br110:    DCB.BaudRate := CBR_110;
@@ -1716,8 +1637,7 @@ begin
 end;
 
 {$Q-}
-
-function TDevItem.RdMemory(var Buf; Adress : cardinal; Count :cardinal):TStatus;
+                    function TDevItem.RdMemory(var Buf; Adress : cardinal; Count :cardinal):TStatus;
 
   function RdMemoryHd(FDevNr : byte; Adress : cardinal; Count :byte; var QA : TByteAr):Tstatus;
   var
@@ -1725,14 +1645,16 @@ function TDevItem.RdMemory(var Buf; Adress : cardinal; Count :cardinal):TStatus;
     RecLen : integer;
   begin
     Q[0]:=FDevNr;
-    Q[1]:=41;
-    Q[2]:=Count;
-    Q[3]:=0;
+    Q[1]:=100;
+    Q[2]:=0;
+    Q[3]:=32;
     SetLongInt(Q[4],Adress);
-    RecLen:=Count+10;
-    Result:=Konwers(Q,8,QA,RecLen);
+    Q[8]:=Count;
+
+    RecLen:=Count+5;
+    Result:=Konwers(Q,9,QA,RecLen);
     if Result=stOk then
-      if not((QA[0]=FDevNr) and (QA[1]=41)) then
+      if not((QA[0]=FDevNr) and (QA[1]=100)) then
         Result := stBadRepl;
   end;
 
@@ -1762,7 +1684,7 @@ begin
     begin
       for i:=0 to Cnt-1 do
       begin
-        p^:=qa[i+8];
+        p^:=qa[i+3];
         inc(p);
       end;
     end;
@@ -1790,15 +1712,17 @@ function TDevItem.WrMemory(const Buf; Adress : cardinal; Count :cardinal):TStatu
     RecLen : integer;
   begin
     Q[0]:=FDevNr;
-    Q[1]:=42;
-    Q[2]:=Count;
-    Q[3]:=0;
+    Q[1]:=100;
+    Q[2]:=0;
+    Q[3]:=33;
     SetLongInt(Q[4],Adress);
-    move(p^,q[8],Count);
-    RecLen:=10;
-    Result:=Konwers(Q,8+Count,QA,RecLen);
+    Q[8]:=Count;
+
+    move(p^,q[9],Count);
+    RecLen:=6;
+    Result:=Konwers(Q,9+Count,QA,RecLen);
     if Result=stOk then
-      if not((QA[0]=FDevNr) and (QA[1]=42)) then
+      if not((QA[0]=FDevNr) and (QA[1]=100)) then
         Result := stBadRepl;
   end;
 
@@ -1836,109 +1760,6 @@ begin
 end;
 {$Q+}
 
-
-
-
-function TDevItem.RdDevInfo(DevName : pchar; var TabVec: cardinal): TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  i  : integer;
-  Reclen : integer;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=40;
-  Reclen := 16;
-  Result:=Konwers(Q,2,QA,Reclen);
-  if Result=stOk then
-    if not((qa[0]=FDevNr) and (qa[1]=40)) then
-      Result := stBadRepl;
-  if Result=stOk then
-  begin
-    for i:=0 to 7 do
-    begin
-      DevName^:= chr(qa[i+2]);
-      inc(DevName);
-    end;
-    DevName^:= #0;
-    TabVec := qa[10] shl 24;
-    TabVec := TabVec or (qa[11] shl 16);
-    TabVec := TabVec or (qa[12] shl 8);
-    TabVec := TabVec or qa[13];
-  end;
-end;
-
-function TDevItem.RdCtrlByte(Nr: byte; var Val : byte):TStatus;
-var
-  Q  :  TByteAr;
-  QA : TByteAr;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=43;
-  Q[2]:=Nr;
-  Result:=Konwers(Q,3,QA);
-  Val := qa[3];
-end;
-
-function TDevItem.WrCtrlByte(Nr: byte; Val : byte):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  RecLen : integer;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=44;
-  Q[2]:=Nr;
-  Q[3]:=Val;
-  RecLen := 5;
-  Result:=Konwers(Q,4,QA,RecLen);
-end;
-
-
-function    TDevItem.TerminalSendKey(key : char):TStatus;
-var
-  Q      : TByteAr;
-  QA     : TByteAr;
-  RecLen : integer;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=45;
-  Q[2]:=ord(key);
-  RecLen := 4;
-  Result:=Konwers(Q,3,QA,RecLen);
-end;
-
-
-
-function  TDevItem.TerminalRead(buf : pchar; var rdcnt : integer):TStatus;
-var
-  Q      : TByteAr;
-  QA     : TByteAr;
-  RecLen : integer;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=46;
-  RecLen:=0;
-
-  Result:=Konwers(1,Q,2,QA,RecLen);
-  if Result=stBadRepl then
-  begin
-    Q[0]:=FDevNr;
-    Q[1]:=47;
-    RecLen:=0;
-    Result:=Konwers(Q,2,QA,RecLen);
-  end;
-
-  if Result=stOk then
-  begin
-    rdcnt:=RecLen-4;
-    if rdcnt<0 then rdcnt:=0;
-    if rdcnt>0 then
-      move(QA[2],buf^,rdcnt);
-  end
-  else
-    rdcnt:=0;
-end;
 
 
 
@@ -2072,426 +1893,6 @@ begin
   Result := (st=stOk);
 end;
 
-function  TDevItem.SeOpenSesion(var SesId : TSesID) : TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrame;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdOpenSesion;
-  P := PSEAskFrame(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  Result:=Konwers(Q,2+2,QA);
-  if Result = stOk then
-    SesId := GetDWord(QA[2]);
-end;
-
-function  TDevItem.SeCloseSesion(SesId : TSesID) : TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrame;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdCloseSesion;
-  P := PSEAskFrame(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  Result:=Konwers(Q,2+sizeof(P^),QA);
-end;
-
-function  TDevItem.SeOpenFile(SesId : TSesID; FName : pchar; Mode : byte; var FileNr : TFileNr):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrameOpenFile;
-  L  : integer;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdOpenFile;
-  P := PSEAskFrameOpenFile(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  P^.OpenMode := Mode;
-  StrLCopy(P^.FName,FName,sizeof(P^.FName));
-  L := 2+4+2+strlen(FName)+1;
-  Result:=Konwers(Q,2+L,QA);
-    FileNr := QA[2];
-end;
-
-function  TDevItem.SeGetDirHd(First : boolean; SesId : TSesID; FName : pchar; Attrib : byte;
-   Buffer : pchar; MaxLen : integer; var Len : integer):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrameDir;
-  RecLen : integer;
-  L      : integer;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdGetDirs;
-  P := PSEAskFrameDir(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  if First then
-  begin
-    P^.First := 1;
-    P^.Attrib   := Attrib;
-    P^.Free     := 0;
-    StrLCopy(P^.Name,FName,sizeof(P^.Name));
-    L := 2+4+4+strlen(FName)+1;
-  end
-{
-  TSEAskFrameDir = packed record
-    AskCnt   : word;
-    SesionID : cardinal;
-    First    : byte;
-    Attrib   : byte;
-    Free     : smallint;
-    Name     : FSTR160;
-  end;
-}
-  else
-  begin
-    P^.First := 0;
-    L := 2+4+1;
-  end;
-  RecLen:=0;
-  Result:=Konwers(Q,2+L,QA,RecLen);
-  if Result=stOk then
-  begin
-    Len := RecLen-4;
-    if Len>MaxLen then
-      Len := MaxLen;
-    if Len<>0 then
-      move(QA[2],Buffer^,Len);
-  end;
-end;
-
-function  TDevItem.SeGetDir(SesId : TSesID; FName : pchar; Attrib : byte; Buffer : pchar; MaxLen : integer):TStatus;
-var
-  Len   : integer;
-  pch   : pchar;
-begin
-  pch := Buffer;
-  Result := SeGetDirHd(true,SesId,FName,Attrib,pch,MaxLen,Len);
-  while (Result=stOk) and (Len<>0)  and (MaxLen<>0) do
-  begin
-    pch := @pch[Len];
-    dec(MaxLen,Len);
-
-    if pch[-1]=#0 then
-    begin
-      break;
-    end;
-
-    Result := SeGetDirHd(false,SesId,FName,Attrib,pch,MaxLen,Len);
-  end;
-  // dopisanie zera gdyby nie by³o
-  if (pch[-1]<>#0) and (Maxlen<>0) then
-  begin
-    pch[0]:=#0;
-  end;
-
-  if MaxLen=0 then
-    Result:= stBufferToSmall;
-
-  if Result=stEND_OFF_DIR then
-    Result:= stOK;
-
-end;
-
-function  TDevItem.SeGetDrvList(SesId : TSesID; DrvList : pchar):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrame;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdGetDriveList;
-  P := PSEAskFrame(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  Result:=Konwers(Q,2+sizeof(P^),QA);
-  if Result=stOk then
-  begin
-    StrLCopy(DrvList,pchar(@QA[2]),20);
-  end;
-end;
-
-function  TDevItem.SeShell(SesId : TSesID; Command : pchar; ResultStr : pchar; MaxLen : integer):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrameCmd;
-  L  : integer;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdShell;
-  P := PSEAskFrameCmd(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  StrLCopy(P^.Command,Command,sizeof(P^.Command));
-  L := 2+4+strlen(Command)+1;
-  Result:=Konwers(Q,2+L,QA);
-  if Result=stOk then
-  begin
-    if (MaxLen>0) and Assigned(ResultStr) then
-      StrLCopy(ResultStr,pchar(@QA[2]),MaxLen);
-  end;
-end;
-
-function TDevItem.SeReadFileEx(SesId : TSesID; FileName : pchar; autoclose: boolean; var buf;
-              var size: integer; var FileNr: TFileNr):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrameReadEx;
-  L  : integer;
-  RecLen : integer;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdReadEx;
-  P := PSEAskFrameReadEx(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  P^.AutoClose := Byte(autoclose);
-  if Size>MAX_MDB_FRAME_SIZE then
-     Size:=MAX_MDB_FRAME_SIZE;
-  P^.SizeToRead := Size;
-  StrLCopy(P^.FName,FileName,sizeof(P^.FName));
-  L := 2+4+2+strlen(FileName)+1;
-  RecLen:=0;
-  Result:=Konwers(Q,2+L,QA,RecLen);
-  if Result=stOk then
-  begin
-    RecLen := RecLen-6;   // cztery bajty z przodu i CRC z ty³u
-    if RecLen>Size then
-      RecLen:=Size;
-    move(QA[4],buf,RecLen);
-    FileNr:=QA[2];
-    size := RecLen;
-  end;
-end;
-
-function TDevItem.SeGetGuidEx(SesId : TSesID; FileName : pchar; var Guid : TSeGuid):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrameOpenFile;
-  L  : integer;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdGetGuidEx;
-  P := PSEAskFrameOpenFile(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  P^.OpenMode := 0;
-  P^.Free := 0;
-  StrLCopy(P^.FName,FileName,sizeof(P^.FName));
-  L := 2+4+2+strlen(FileName)+1;
-  Result:=Konwers(Q,2+L,QA);
-  Guid.d1:=DSwap(pCardinal(@QA[2])^);
-  Guid.d2:=DSwap(pCardinal(@QA[6])^);
-end;
-
-function  TDevItem.SeReadFileHd(SesId : TSesID;  FileNr : TFileNr; var buf; var Cnt : integer):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrameFile;
-  L  : integer;
-  RecLen : integer;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdRead;
-  P := PSEAskFrameFile(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  P^.FileNr := FileNr;
-  P^.BArg1  := 0;
-  L := Cnt;
-  if L>MAX_DATA_BUF_SIZE then
-    L := MAX_DATA_BUF_SIZE;
-  P^.Arg1   := DSwap(L);
-  RecLen:=0;
-  Result:=Konwers(Q,2+sizeof(P^),QA,RecLen);
-  if Result=stOk then
-  begin
-    dec(RecLen,4);  // dwa bajty z przodu i CRC z ty³u
-    if RecLen>Cnt then
-      RecLen := Cnt;
-    Move(QA[2],buf,RecLen);
-    Cnt := RecLen;
-  end;
-end;
-
-function TDevItem.SeReadFile(SesId : TSesID;  FileNr : TFileNr; var buf; var Cnt : integer):TStatus;
-var
-  Cnt1 : integer;
-  CntS : integer;
-  p    : pByte;
-begin
-  glProgress := true;
-  SetProgress(0);
-  MsgFlowSize(0);
-  SetWorkFlag(true);
-  p := pByte(@buf);
-  CntS := 0;
-  repeat
-    Cnt1:=Cnt-CntS;
-    Result := SeReadFileHd(SesId,FileNr,p^,Cnt1);
-    if Result=stOK then
-    begin
-      inc(CntS,Cnt1);
-      inc(p,cnt1);
-    end;
-    SetProgress(CntS,Cnt);
-    MsgFlowSize(CntS);
-  until (Result<>stOK) or (Cnt=CntS) or (cnt1=0);
-  Cnt := CntS;
-  SetProgress(100);
-  MsgFlowSize(Cnt);
-  SetWorkFlag(false);
-  glProgress := false;
-end;
-
-function  TDevItem.SeWriteFileHd(SesId : TSesID; FileNr : TFileNr; const buf; var Cnt : integer):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrameWr;
-  L  : integer;
-  RecLen : integer;
-  HS : integer;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdWrite;
-  P := PSEAskFrameWr(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  P^.FileNr := FileNr;
-  P^.Free   := 0;
-  HS := sizeof(P^)-sizeof(BUF234);
-  L := Cnt;
-  if L>MAX_DATA_BUF_SIZE-HS then
-    L := MAX_DATA_BUF_SIZE-HS;
-  Move(buf,Q[2+HS],L);
-  RecLen:=0;
-  Result:=Konwers(Q,2+HS+L,QA,RecLen);
-  if (Result=stOk) and (RecLen>=8) then
-  begin
-    Cnt := GetLongInt(QA[2]);
-  end
-  else
-    Cnt := 0;
-end;
-
-function  TDevItem.SeWriteFile(SesId : TSesID; FileNr : TFileNr; const buf; var Cnt : integer):TStatus;
-var
-  Cnt1 : integer;
-  CntS : integer;
-  p    : pByte;
-begin
-  glProgress := true;
-  SetProgress(0);
-  MsgFlowSize(0);
-  SetWorkFlag(true);
-  p := pByte(@buf);
-  CntS := 0;
-  repeat
-    Cnt1:=Cnt-CntS;
-    Result := SeWriteFileHd(SesId,FileNr,p^,Cnt1);
-    if Result=stOK then
-    begin
-      inc(p,cnt1);
-      inc(CntS,Cnt1);
-    end;
-    SetProgress(CntS,Cnt);
-    MsgFlowSize(CntS);
-  until (Result<>stOK) or (Cnt=CntS);
-  Cnt := CntS;
-  SetProgress(100);
-  MsgFlowSize(Cnt);
-  SetWorkFlag(false);
-  glProgress := false;
-end;
-
-function  TDevItem.SeSeek(SesId : TSesID; FileNr : TFileNr; Offset  : integer; Orgin : byte; var Pos : integer):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrameFile;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdSeek;
-  P := PSEAskFrameFile(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  P^.FileNr := FileNr;
-  P^.BArg1  := Orgin;
-  P^.Arg1   := DSwap(Cardinal(Offset));
-  Result:=Konwers(Q,2+sizeof(P^),QA);
-  if Result=stOk then
-  begin
-    Pos := GetLongInt(QA[2]);
-  end;
-end;
-
-function  TDevItem.SeGetFileSize(SesId : TSesID; FileNr : TFileNr; var FileSize : integer):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrameFile;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdGetFileSize;
-  P := PSEAskFrameFile(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  P^.FileNr := FileNr;
-  Result:=Konwers(Q,2+2+4+1,QA);
-  if Result=stOk then
-  begin
-    FileSize := GetLongInt(QA[2]);
-  end;
-end;
-
-
-function  TDevItem.SeCloseFile(SesId : TSesID;  FileNr : TFileNr):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrameFile;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdClose;
-  P := PSEAskFrameFile(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  P^.FileNr := FileNr;
-  Result:=Konwers(Q,2+2+4+1,QA);
-end;
-
-
-function  TDevItem.SeGetGuid(SesId : TSesID;  FileNr : TFileNr; var Guid : TSeGuid):TStatus;
-var
-  Q  : TByteAr;
-  QA : TByteAr;
-  P  : PSEAskFrameFile;
-begin
-  Q[0]:=FDevNr;
-  Q[1]:=crdGetGuid;
-  P := PSEAskFrameFile(@Q[2]);
-  P^.AskCnt := Swap(GetNewAskNr);
-  P^.SesionID := DSwap(SesId);
-  P^.FileNr := FileNr;
-  Result:=Konwers(Q,2+2+4+1,QA);
-  Guid.d1:=DSwap(pCardinal(@QA[2])^);
-  Guid.d2:=DSwap(pCardinal(@QA[6])^);
-end;
-
 
 //---------------------  TDevAcces ---------------------------
 constructor TDevAcces.Create;
@@ -2579,7 +1980,7 @@ begin
   Result := -1;
   p := 0;
   s := GetTocken(ConnectStr,p);
-  if s='MCOM' then
+  if s='UCOM' then
   begin
     MdbMode := mdbRTU;
     Parity  := paNONE;
@@ -2905,22 +2306,7 @@ begin
     Result := stBadId;
 end;
 
-
-
 // Funkcje odczytu, zapisu pamiêci
-function ReadS(Id :TAccId;var  S; var Vec : Cardinal): TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-  begin
-    Result := Dev.RdDevInfo(pchar(@s),Vec);
-  end
-  else
-    Result := stBadId;
-end;
-
 
 function ReadMem(Id :TAccId; var Buffer; adr : Cardinal; size : Cardinal): TStatus; stdcall;
 var
@@ -2940,210 +2326,6 @@ begin
   Dev := GlobDevAcces.FindId(Id);
   if Dev<>nil then
     Result := Dev.WrMemory(Buffer,Adr,Size)
-  else
-    Result := stBadId;
-end;
-
-
-
-function WriteCtrl(Id :TAccId; nr: byte; b: byte): TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.WrCtrlByte(Nr,b)
-  else
-    Result := stBadId;
-end;
-
-function ReadCtrl(Id :TAccId; nr : byte; var b : byte): TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.RdCtrlByte(Nr,b)
-  else
-    Result := stBadId;
-end;
-
-
-function TerminalSendKey(Id :TAccId; key : char):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.TerminalSendKey(key)
-  else
-    Result := stBadId;
-end;
-
-
-function  TerminalRead(Id :TAccId; buf : pchar; var rdcnt : integer):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.TerminalRead(buf,rdcnt)
-  else
-    Result := stBadId;
-end;
-
-
-function  SeOpenSesion(Id :TAccId; var SesId : TSesID) : TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeOpenSesion(SesId)
-  else
-    Result := stBadId;
-end;
-
-function  SeCloseSesion(Id :TAccId; SesId : TSesID) : TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeCloseSesion(SesId)
-  else
-    Result := stBadId;
-end;
-
-function  SeOpenFile(Id :TAccId; SesId : TSesID; FName : pchar; Mode : byte; var FileNr : TFileNr):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeOpenFile(SesId,FName,Mode,FileNr)
-  else
-    Result := stBadId;
-end;
-
-function  SeGetDir(Id :TAccId; SesId : TSesID; FName : pchar; Attrib : byte; Buffer : pchar; MaxLen : integer):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeGetDir(SesId,FName,Attrib,Buffer,MaxLen)
-  else
-    Result := stBadId;
-end;
-
-function  SeGetDrvList(Id :TAccId; SesId : TSesID; DrvList : pchar):TStatus;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeGetDrvList(SesId,DrvList)
-  else
-    Result := stBadId;
-end;
-
-function  SeShell(Id :TAccId; SesId : TSesID; Command : pchar; ResultStr : pchar; MaxLen : integer):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeShell(SesId ,Command,ResultStr,MaxLen)
-  else
-    Result := stBadId;
-end;
-
-function  SeReadFile(Id :TAccId; SesId : TSesID;  FileNr : TFileNr; var buf; var Cnt : integer):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeReadFile(SesId,FileNr,Buf,Cnt)
-  else
-    Result := stBadId;
-end;
-
-function  SeWriteFile(Id :TAccId;  SesId : TSesID; FileNr : TFileNr; const buf; var Cnt : integer):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeWriteFile(SesId,FileNr,Buf,Cnt)
-  else
-    Result := stBadId;
-end;
-
-function  SeSeek(Id :TAccId;  SesId : TSesID; FileNr : TFileNr; Offset  : integer; Orgin : byte; var Pos : integer):TStatus;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeSeek(SesId,FileNr,Offset,Orgin,Pos)
-  else
-    Result := stBadId;
-end;
-
-function  SeGetFileSize(Id :TAccId;  SesId : TSesID; FileNr : TFileNr; var FileSize : integer):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeGetFileSize(SesId,FileNr,FileSize)
-  else
-    Result := stBadId;
-end;
-
-function  SeCloseFile(Id :TAccId; SesId : TSesID;  FileNr : TFileNr):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeCloseFile(SesId,FileNr)
-  else
-    Result := stBadId;
-end;
-
-function  SeGetGuid(Id :TAccId; SesId : TSesID;  FileNr : TFileNr; var Guid : TSeGuid):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeGetGuid(SesId,FileNr,Guid)
-  else
-    Result := stBadId;
-end;
-
-function  SeGetGuidEx(Id :TAccId; SesId : TSesID; FileName : pchar; var Guid : TSeGuid):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeGetGuidEx(SesId,FileName,Guid)
-  else
-    Result := stBadId;
-end;
-
-function  SeReadFileEx(Id :TAccId; SesId : TSesID; FileName : pchar; autoclose: boolean; var buf;
-              var size: integer; var FileNr: TFileNr):TStatus; stdcall;
-var
-  Dev : TDevItem;
-begin
-  Dev := GlobDevAcces.FindId(Id);
-  if Dev<>nil then
-    Result := Dev.SeReadFileEx(SesId,FileName,autoclose,buf,size,FileNr)
   else
     Result := stBadId;
 end;

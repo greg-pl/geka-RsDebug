@@ -140,6 +140,9 @@ var
   ModbusComDllHandle : THandle;
   ModbusTcpDllHandle : THandle;
   CanDllHandle : THandle;
+  UdtModComDllHandle : THandle;
+
+
   CmmDevList : TCmmDevList;
 
 function TCmmDevList.GetItem(Index: Integer): TCmmDevice;
@@ -193,6 +196,9 @@ begin
       if s = 'MTCP' then   DllHandle := ModbusTcpDllHandle;
       if s = 'RTCP' then   DllHandle := TcpDllHandle;
       if s = 'CAN' then    DllHandle := CanDllHandle;
+      if s = 'UCOM' then    DllHandle := UdtModComDllHandle;
+
+
       if DllHandle<>INVALID_HANDLE_VALUE then
       begin
         @_AddDev := GetProcAddress(DllHandle, 'AddDev');
@@ -658,6 +664,7 @@ initialization
   ModbusComDllHandle := LoadLibrary('MBusCom.cmm');
   ModbusTcpDllHandle := LoadLibrary('MdbTcp.cmm');
   CanDllHandle := LoadLibrary('CanDrv.cmm');
+  UdtModComDllHandle := LoadLibrary('UdtMdbCom.cmm');                      
   CmmDevList := TCmmDevList.Create(false);
 
 
