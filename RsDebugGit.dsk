@@ -11,8 +11,8 @@ File_8=SourceModule,'c:\program files\borland\delphi7\source\rtl\Sys\system.pas'
 
 [Modules]
 Module0=D:\!!Work\RsDebugGit\UdtCom\ThRsdUnit.pas
-Module1=D:\!!Work\RsDebugGit\UdtCom\GlobalMan.pas
-Module2=D:\!!Work\RsDebugGit\RsDebug\Main.pas
+Module1=D:\!!Work\RsDebugGit\RsDebug\Main.pas
+Module2=D:\!!Work\RsDebugGit\UdtCom\GlobalMan.pas
 Module3=D:\!!Work\RsDebugGit\RsDebug\RsdDll.pas
 Count=4
 EditWindowCount=1
@@ -22,15 +22,15 @@ ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[D:\!!Work\RsDebugGit\UdtCom\GlobalMan.pas]
-ModuleType=SourceModule
-FormState=0
-FormOnTop=0
-
 [D:\!!Work\RsDebugGit\RsDebug\Main.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=1
+
+[D:\!!Work\RsDebugGit\UdtCom\GlobalMan.pas]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
 
 [D:\!!Work\RsDebugGit\RsDebug\RsdDll.pas]
 ModuleType=SourceModule
@@ -89,9 +89,9 @@ LeftPanelSize=152
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=106
+BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=00000400010000000B0000004D6573736167655669657700000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
 Module=D:\!!Work\RsDebugGit\RsDebug\Main.pas
@@ -154,9 +154,9 @@ Count=0
 Create=1
 Visible=1
 State=2
-Left=-1920
+Left=-1928
 Top=18
-Width=2452
+Width=1936
 Height=123
 MaxLeft=-1
 MaxTop=-1
@@ -201,7 +201,7 @@ Dockable=1
 Create=1
 Visible=0
 State=0
-Left=133
+Left=3973
 Top=158
 Width=899
 Height=824
@@ -234,11 +234,11 @@ State=0
 Left=0
 Top=133
 Width=375
-Height=1037
+Height=891
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=359
-ClientHeight=998
+ClientHeight=852
 TBDockHeight=637
 LRDockWidth=190
 Dockable=1
@@ -382,7 +382,7 @@ ShowChecked=1
 Create=1
 Visible=0
 State=0
-Left=286
+Left=4126
 Top=264
 Width=457
 Height=250
@@ -421,18 +421,18 @@ State=0
 Left=0
 Top=12
 Width=152
-Height=873
+Height=982
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=152
-ClientHeight=873
+ClientHeight=982
 TBDockHeight=305
 LRDockWidth=152
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=1
+Visible=0
 State=0
 Left=12
 Top=0
@@ -469,5 +469,5 @@ DockClients=ProjectManager,CallStackWindow,WatchWindow
 DockSiteData=00000400000000007F02000000000000017D0100000000000001000000001C0100001200000050726F6A6563744D616E61676572466F726D0100000000DD0100000F00000043616C6C537461636B57696E646F7701000000007F0200000B000000576174636857696E646F77FFFFFFFF
 
 [ActiveProject]
-ActiveProject=6
+ActiveProject=1
 
