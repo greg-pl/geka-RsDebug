@@ -33,7 +33,8 @@ type
     property Items[Index: Integer]: TMapItem read GetItem;
     function FindItem(AName :string): TMapItem; overload;
     function FindItem(Adr : cardinal): TMapItem; overload;
-    procedure LoadToList(SL :TStrings);
+    procedure LoadToList(SL :TStrings); overload;
+    procedure LoadToList(Prefix : string; SL :TStrings); overload;
     procedure Add(Mapitem :TMapItem);
     procedure SetItemsSize;
   end;
@@ -182,23 +183,26 @@ function TMapItem.IsNeeded : boolean;
     begin
       s := ProgCfg.SelSections.Strings[i];
       n := length(s);
-      if s[n]='*' then
+      if n>0 then
       begin
-        if copy(s,1,n-1)=copy(sname,1,n-1) then
+        if s[n]='*' then
         begin
-          Result := true;
-          break;
-        end;
-      end
-      else
-      begin
-        if s=sname then
+          if copy(s,1,n-1)=copy(sname,1,n-1) then
+          begin
+            Result := true;
+            break;
+          end;
+        end
+        else
         begin
-          Result := true;
-          break;
+          if s=sname then
+          begin
+            Result := true;
+            break;
+          end;
         end;
       end;
-    end;
+    end;  
   end;
 
 
@@ -281,6 +285,33 @@ begin
     end;
   end;
 end;
+
+procedure TMapItemList.LoadToList(Prefix : string; SL :TStrings);
+var
+  i : integer;
+  n : integer;
+  s,s1 : string;
+
+begin
+  n := length(prefix);
+  SL.Clear;
+  SL.BeginUpdate;
+  try
+    for i:=0 to Count-1 do
+    begin
+      if Items[i].IsNeeded then
+      begin
+        s := Items[i].Name;
+        s1 := copy(s,1,n);
+        if s1 = prefix then
+          SL.Add(copy(s,1+n,length(s)-n));
+      end;
+    end;
+  finally
+    SL.EndUpdate;
+  end;
+end;
+
 
 function SortByAdressProc(Item1, Item2: Pointer): Integer;
 begin
@@ -927,7 +958,7 @@ const
 var
   MItem : TMapItem;
 begin
-  Result := 0;
+  Result := UNKNOWN_ADRESS;
   if s<>'' then
   begin
     if s[1] in DecDigits then

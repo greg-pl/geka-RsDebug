@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 4199
-  Top = 410
+  Left = 550
+  Top = 306
   Width = 730
   Height = 591
   Caption = 'MainForm'
@@ -327,6 +327,12 @@ object MainForm: TMainForm
       Caption = 'Rz40 Event Reader'
       OnExecute = actRZ40EventReaderExecute
     end
+    object RfcWinAct: TAction
+      Category = 'DebugWin'
+      Caption = 'Rfc Execute'
+      OnExecute = RfcWinActExecute
+      OnUpdate = MemoryWinActUpdate
+    end
   end
   object MainMenu1: TMainMenu
     Left = 296
@@ -436,6 +442,10 @@ object MainForm: TMainForm
       end
       object Rozkazykontrolne1: TMenuItem
         Action = ControlWinAct
+        GroupIndex = 31
+      end
+      object RfcExecute1: TMenuItem
+        Action = RfcWinAct
         GroupIndex = 31
       end
     end

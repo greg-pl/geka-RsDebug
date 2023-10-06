@@ -4,3 +4,5 @@
 *.local
 *.~*
 *.ddp
+tmp/
+*.bak

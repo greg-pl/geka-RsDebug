@@ -3,7 +3,7 @@ unit ThRsdUnit;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes,
+  Windows, Messages, SysUtils, Classes, Contnrs,
   GlobalMan;
 
 
@@ -39,7 +39,7 @@ const
   LibPropertyStr : string =
     '<?xml version="1.0" standalone="yes"?>'+
     '<LIB_DESCR>'+
-      '<INFO TYPE="RS" DESCR="Port RS (protocol Modbus_Udt)" SIGN="UMDB"/>'+
+      '<INFO TYPE="RS" DESCR="Port RS (protocol Modbus_Udt)" SIGN="UCOM"/>'+
       '<PARAMS>'+
         '<PARAM DESCR="Port number" TYPE="COM_NR" DEFAULT="1" />'+
         '<PARAM DESCR="Device number" TYPE="BYTE" DEFAULT="255"/>'+
@@ -51,7 +51,7 @@ const
   LibPropertyStrV2 : string =
     '<?xml version="1.0" standalone="yes"?>'+
     '<CMM_DESCR>'+
-      '<CMM_INFO TYPE="RS" DESCR="Port RS (protocol Modbus_Udt)" SIGN="UMDB"/>'+
+      '<CMM_INFO TYPE="RS" DESCR="Port RS (protocol Modbus_Udt)" SIGN="UCOM"/>'+
       '<GROUP>'+
         '<ITEM NAME="COM" TYPE="COM_NR" DESCR="Port number" DEFVALUE="1" />'+
         '<ITEM NAME="DEV_NR" TYPE="INT" DESCR="Device number" DEFVALUE="1" MIN="1" MAX="240" />'+
@@ -82,7 +82,7 @@ const
 
 type
   TStatus   = integer;
-  TAccId    = integer;
+  TPortId    = integer;
   TSesID    = cardinal;
   TFileNr   = byte;
   TSeGuid   = record
@@ -91,40 +91,40 @@ type
               end;
 
 
-  TCallBackFunc = procedure(Id :TAccId; CmmId : integer; Ev : integer; R : real); stdcall;
+  TCallBackFunc = procedure(Id :TPortId; CmmId : integer; Ev : integer; R : real); stdcall;
 
 procedure LibIdentify(var LibGuid :TGUID); stdcall;
 procedure SetEmulateVer(Ver : integer); stdcall;
 function  GetLibProperty:pchar; stdcall;
-function  RegisterCallBackFun(Id :TAccId; CmmId : integer; CallBackFunc : TCallBackFunc): TStatus; stdcall;
-function  GetPortHandle(Id :TAccId): THandle;  stdcall;
-function  SetBreakFlag(Id :TAccId; Val:boolean): TStatus; stdcall;
+function  RegisterCallBackFun(Id :TPortId; CmmId : integer; CallBackFunc : TCallBackFunc): TStatus; stdcall;
+function  GetPortHandle(Id :TPortId): THandle;  stdcall;
+function  SetBreakFlag(Id :TPortId; Val:boolean): TStatus; stdcall;
 function  GetDrvParamList(ToSet : boolean): pchar; stdcall;
-function  GetDrvStatus(Id :TAccId; ParamName : pchar; ParamValue :pchar; MaxRpl:integer): TStatus; stdcall;
-function  SetDrvParam(Id :TAccId; ParamName : pchar; ParamValue :pchar): TStatus; stdcall;
-function  GetErrStr(Id :TAccId; Code :TStatus; S : pChar; Max: integer): boolean;  stdcall;
+function  GetDrvStatus(Id :TPortId; ParamName : pchar; ParamValue :pchar; MaxRpl:integer): TStatus; stdcall;
+function  SetDrvParam(Id :TPortId; ParamName : pchar; ParamValue :pchar): TStatus; stdcall;
+function  GetErrStr(Id :TPortId; Code :TStatus; S : pChar; Max: integer): boolean;  stdcall;
 
 //  ConnectStr:
 //  MCOM;nr_rs;nr_dev;rs_speed;[ASCII|RTU];[N|E|O]
 //  MCOM;1;7;115200;RTU;N
-function  AddDev(ConnectStr : pchar): TAccId; stdcall;
-function  DelDev(Id :TAccId):TStatus; stdcall;
-function  OpenDev(Id :TAccId):TStatus; stdcall;
-procedure CloseDev(Id :TAccId); stdcall;
-function  GetDevNr(Id :TAccId):byte; stdcall;
+function  AddDev(ConnectStr : pchar): TPortId; stdcall;
+function  DelDev(Id :TPortId):TStatus; stdcall;
+function  OpenDev(Id :TPortId):TStatus; stdcall;
+procedure CloseDev(Id :TPortId); stdcall;
+function  GetDevNr(Id :TPortId):byte; stdcall;
 
 // funkcje podstawowe Modbusa
-function  RdOutTable(Id :TAccId; var Buf; Adress : word; Count :word):TStatus; stdcall;
-function  RdInpTable(Id :TAccId; var Buf; Adress : word; Count :word):TStatus; stdcall;
-function  RdReg(Id :TAccId; var Buf; Adress : word; Count :word):TStatus; stdcall;
-function  RdAnalogInp(Id :TAccId; var Buf; Adress : word; Count :word):TStatus; stdcall;
-function  WrOutput(Id :TAccId; Adress : word; Val : word):TStatus; stdcall;
-function  WrReg(Id :TAccId; Adress : word; Val : word):TStatus; stdcall;
-function  WrMultiReg(Id :TAccId; var Buf; Adress : word; Count :word):TStatus; stdcall;
+function  RdOutTable(Id :TPortId; var Buf; Adress : word; Count :word):TStatus; stdcall;
+function  RdInpTable(Id :TPortId; var Buf; Adress : word; Count :word):TStatus; stdcall;
+function  RdReg(Id :TPortId; var Buf; Adress : word; Count :word):TStatus; stdcall;
+function  RdAnalogInp(Id :TPortId; var Buf; Adress : word; Count :word):TStatus; stdcall;
+function  WrOutput(Id :TPortId; Adress : word; Val : word):TStatus; stdcall;
+function  WrReg(Id :TPortId; Adress : word; Val : word):TStatus; stdcall;
+function  WrMultiReg(Id :TPortId; var Buf; Adress : word; Count :word):TStatus; stdcall;
 
 // odczyt, zapis pamiêci
-function  ReadMem(Id :TAccId; var Buffer; adr : Cardinal; size : Cardinal): TStatus; stdcall;
-function  WriteMem(Id :TAccId; var Buffer; adr : Cardinal; Size : Cardinal): TStatus; stdcall;
+function  ReadMem(Id :TPortId; var Buffer; adr : Cardinal; size : Cardinal): TStatus; stdcall;
+function  WriteMem(Id :TPortId; var Buffer; adr : Cardinal; Size : Cardinal): TStatus; stdcall;
 
 
 
@@ -160,15 +160,12 @@ Exports
     GetDrvStatus,
     SetDrvParam;
 
-
-
-
 implementation
 
 uses Math;
 
 const
-  MAX_MDB_FRAME_SIZE = 128;
+  MAX_MDB_FRAME_SIZE = 256;
   MAX_MDB_STD_FRAME_SIZE = 112;
 
 type
@@ -189,7 +186,7 @@ type
 
   TDevItem = class (TObject)
   private
-    AccID         : integer;
+    PortId         : integer;
     ComNr         : integer;
     FDevNr        : integer;
     BaudRate      : TBaudrate;
@@ -201,7 +198,6 @@ type
     FBreakFlag    : boolean;
 
     ComHandle     : THandle;
-    SemHandle     : THandle;
     ErrStr        : Shortstring;
 
     LastFinished  : Cardinal;
@@ -223,8 +219,6 @@ type
 
     procedure FSetCountDivide(AValue : integer);
     procedure FSetMdbStdCndDiv(AValue : integer);
-    function  GetComAcces: boolean;
-    procedure ReleaseComAcces;
 
     function  RsWrite(var Buffer; Count: Integer): Integer;
     function  RsRead(var Buffer; Count: Integer): Integer;
@@ -263,7 +257,7 @@ type
     procedure RsWriteWord(b : Word);
   public
     MaxTime   : integer;
-    constructor Create(AId : TAccId; AComNr : TComPort; ADevNr: integer;ABaudRate :TBaudrate;
+    constructor Create(AId : TPortId; AComNr : TComPort; ADevNr: integer;ABaudRate :TBaudrate;
                             AMode : TMdbMode; AParity : TParity);
     destructor  Destroy; override;
     property    CountDivide: integer  read FCountDivide  write FSetCountDivide;
@@ -296,27 +290,27 @@ type
   end;
 
 
-  TDevAcces = class(TList)
+  TPortList = class(TObjectList)
   private
-    FCurrId          : TAccId;
+    FCurrId          : TPortId;
     FCriSection      : TRTLCriticalSection;
     function GetBoudRate(BdTxt: shortstring; var Baund :TBaudRate) : boolean;
     function GetMdbMode(BdTxt: shortstring; var MdbMode:TMdbMode) : boolean;
     function GetParity(BdTxt: shortstring; var Parity:TParity) : boolean;
     function GetTocken(s : pChar; var p: integer):shortstring;
-    function GetId:TAccId;
+    function GetId:TPortId;
   public
     constructor Create;
     destructor  Destroy; override;
-    function AddAcc(ConnectStr : pchar): TAccId;
-    function DelAcc(AccId : TAccId):TStatus;
-    function FindId(AccId : TAccId):TDevItem;
+    function AddPort(ConnectStr : pchar): TPortId;
+    function DelPort(PortId : TPortId):TStatus;
+    function FindId(PortId : TPortId):TDevItem;
   end;
 
 
 
 var
-  GlobDevAcces : TDevAcces;
+  GlobPortList : TPortList;
   EmulateVer   : integer;
 
 function lolo(w : Cardinal):byte;
@@ -353,11 +347,11 @@ begin
 end;
 
 //---------------------  TDevItem ---------------------------
-constructor TDevItem.Create(AId : TAccId; AComNr : TComPort; ADevNr: integer;ABaudRate :TBaudrate;
+constructor TDevItem.Create(AId : TPortId; AComNr : TComPort; ADevNr: integer;ABaudRate :TBaudrate;
                             AMode : TMdbMode; AParity : TParity);
 begin
   inherited Create;
-  AccID        := AId;
+  PortId        := AId;
   ComNr        := AComNr;
   FDevNr       := ADevNr;
   BaudRate     := ABaudrate;
@@ -413,6 +407,9 @@ begin
   FillChar(DCB, SizeOf(DCB), 0);
   DCB.DCBlength := SizeOf(DCB);
   DCB.Flags    := DCB.Flags or dcb_Binary;
+  DCB.Flags    := DCB.Flags or 00002000;
+  //00003000
+
   if FParity<>paNONE then
     DCB.Flags    := DCB.Flags or dcb_Parity;
   case FParity of
@@ -486,17 +483,16 @@ end;
 
 
 function  TDevItem.Open : TStatus;
+var
+  s               : string;
 begin
-  Result := GetCommHandle(ComNr,ComHandle,SemHandle);
+  s:='\\.\COM'+IntToStr(AComNr);
+  ComHandle :=CreateFile(pchar(s),GENERIC_READ or GENERIC_WRITE,
+                     0,nil,OPEN_EXISTING,FILE_FLAG_OVERLAPPED,0);
+  result := (ComHandle <> INVALID_HANDLE_VALUE);
   if Result=stOk then
   begin
-    if GetComAcces then
-    begin
-      Result := SetupState;
-      ReleaseComAcces;
-    end
-    else
-      Result := stNoSemafor;
+    Result := SetupState;
   end;
   FrameRepCnt := 0;
   FrameCnt    := 0;
@@ -507,9 +503,8 @@ end;
 
 procedure TDevItem.Close;
 begin
-  CloseCommHandle(ComNr);
+  CloseHandle(ComHandle);
   ComHandle:=INVALID_HANDLE_VALUE;
-  SemHandle:=INVALID_HANDLE_VALUE;
 end;
 
 function TDevItem.DSwap(w :Cardinal):Cardinal;
@@ -599,17 +594,6 @@ end;
 
 //  -------------------- Obsluga RS  -----------------------------------------
 
-function TDevItem.GetComAcces: boolean;
-begin
-  Result := (WaitForSingleObject(SemHandle,MaxTime)=WAIT_OBJECT_0);
-end;
-
-procedure TDevItem.ReleaseComAcces;
-var
-  LCnt : Cardinal;
-begin
-  ReleaseSemaphore(SemHandle,1,@LCnt);
-end;
 
 function TDevItem.InQue: Integer;
 var
@@ -701,7 +685,7 @@ end;
 procedure  TDevItem.GoBackFunct(Ev: integer; R: real);
 begin
   if Assigned(FCallBackFunc) then
-    FCallBackFunc(AccID,FCmmId,Ev,R);
+    FCallBackFunc(PortId,FCmmId,Ev,R);
 end;
 
 procedure TDevItem.SetProgress(F: real);
@@ -935,7 +919,10 @@ begin
       Result:=false;
   end
   else
-    Result:=false;
+    begin
+      OutputDebugString(pchar(Format('Expected=%u Recived=%u',[ToReadCnt,RecLen])));
+      Result:=false;
+    end;
 end;
 
 
@@ -1054,124 +1041,118 @@ begin
     Result := stNotOpen;
     Exit;
   end;
-  if GetComAcces then
+  if not(glProgress) then
   begin
-    if not(glProgress) then
+    SetProgress(0);
+    MsgFlowSize(0);
+    SetWorkFlag(true);
+  end;
+
+  case FMdbMode of
+  mdbRTU   :
     begin
-      SetProgress(0);
-      MsgFlowSize(0);
-      SetWorkFlag(true);
+      CntToSnd := Count+2;
+      setlength(MyBuf,CntToSnd);
+      move(Buf,MyBuf[0],Count);
+      w:=MakeCrc(MyBuf[0],Count);
+      MyBuf[Count] := lo(w);
+      MyBuf[Count+1] := hi(w);
     end;
-
-    case FMdbMode of
-    mdbRTU   :
-      begin
-        CntToSnd := Count+2;
-        setlength(MyBuf,CntToSnd);
-        move(Buf,MyBuf[0],Count);
-        w:=MakeCrc(MyBuf[0],Count);
-        MyBuf[Count] := lo(w);
-        MyBuf[Count+1] := hi(w);
-      end;
-    mdbASCII :
-      begin
-        CntToSnd := 1+2*(Count+1)+2;
-        setlength(MyBuf,CntToSnd);
-        BildAsciiBuf(MyBuf[0],Buf,Count);
-      end;
-    else
-      CntToSnd := 0;
-    end;
-
-    if TByteAr(Buf)[0]<>0 then
+  mdbASCII :
     begin
-      Rep:=RepZad;
-      repeat
-        q := true;
-        CmdRep := 0;
-        if not(FBreakFlag) then
+      CntToSnd := 1+2*(Count+1)+2;
+      setlength(MyBuf,CntToSnd);
+      BildAsciiBuf(MyBuf[0],Buf,Count);
+    end;
+  else
+    CntToSnd := 0;
+  end;
+
+  if TByteAr(Buf)[0]<>0 then
+  begin
+    Rep:=RepZad;
+    repeat
+      q := true;
+      CmdRep := 0;
+      if not(FBreakFlag) then
+      begin
+        PurgeInOut;
+        inc(FrameCnt);
+        if Rs485Wait then
         begin
-          PurgeInOut;
-          inc(FrameCnt);
-          if Rs485Wait then
+          while GetTickCount-LastFinished<2 do
           begin
-            while GetTickCount-LastFinished<2 do
-            begin
-              sleep(1);
-              inc(WaitCnt);
-            end;
+            sleep(1);
+            inc(WaitCnt);
           end;
-          RsWrite(MyBuf[0],CntToSnd);
-
-          case FMdbMode of
-          mdbRTU:
-            q := ReciveRTUAnswer(OutBuf,ToReadCnt,RecLen);
-          mdbASCII:
-            q := ReciveASCIIAnswer(OutBuf,ToReadCnt,RecLen);
-          else
-            q := false;
-          end;
-
-          Cmd := TByteAr(Buf)[1];
-          CmdRep := TByteAr(OutBuf)[1];
-          if (TByteAr(OutBuf)[0]<>FDevNr) or (Cmd <> (CmdRep and $7F)) then
-          begin
-            q := false;   // odebrano nie t¹ ramkê
-          end;
-
-          if not(q) then
-          begin
-            inc(FrameRepCnt);
-            dec(rep);
-            if (rep<>0) then
-            begin
-              sleep(10)
-            end;
-          end;
-          LastFinished := GetTickCount;
         end;
-      until (rep=0) or q or FBreakFlag;
+        RsWrite(MyBuf[0],CntToSnd);
 
-      Result := stOk;
-      if FBreakFlag then
-      begin
-        Result := stUserBreak;
-      end
-      else if rep=0 then
-      begin
-        Result := stBadRepl;
-      end
-      else if not(q) then
-      begin
-        Result := stTimeErr;
-      end
-      else
-      begin
-        if (CmdRep and $80)<>0 then
+        case FMdbMode of
+        mdbRTU:
+          q := ReciveRTUAnswer(OutBuf,ToReadCnt,RecLen);
+        mdbASCII:
+          q := ReciveASCIIAnswer(OutBuf,ToReadCnt,RecLen);
+        else
+          q := false;
+        end;
+
+        Cmd := TByteAr(Buf)[1];
+        CmdRep := TByteAr(OutBuf)[1];
+        if (TByteAr(OutBuf)[0]<>FDevNr) or (Cmd <> (CmdRep and $7F)) then
         begin
-          if TByteAr(OutBuf)[2]<>4 then
-            Result := stMdbError+TByteAr(OutBuf)[2]
-          else
-            Result := stMdbExError+TByteAr(OutBuf)[3]
+          q := false;   // odebrano nie t¹ ramkê
         end;
+
+        if not(q) then
+        begin
+          inc(FrameRepCnt);
+          dec(rep);
+          if (rep<>0) then
+          begin
+            sleep(10)
+          end;
+        end;
+        LastFinished := GetTickCount;
       end;
-      if not(glProgress) then
-      begin
-        SetProgress(100);
-        SetWorkFlag(false);
-      end;
+    until (rep=0) or q or FBreakFlag;
+
+    Result := stOk;
+    if FBreakFlag then
+    begin
+      Result := stUserBreak;
+    end
+    else if rep=0 then
+    begin
+      Result := stBadRepl;
+    end
+    else if not(q) then
+    begin
+      Result := stTimeErr;
     end
     else
-    begin    // Brodcast
-      PurgeInOut;
-      RsWrite(Buf,Count+2);
-      Result := stOk;
+    begin
+      if (CmdRep and $80)<>0 then
+      begin
+        if TByteAr(OutBuf)[2]<>4 then
+          Result := stMdbError+TByteAr(OutBuf)[2]
+        else
+          Result := stMdbExError+TByteAr(OutBuf)[3]
+      end;
     end;
-    SetLength(MyBuf,0);
-    ReleaseComAcces;
+    if not(glProgress) then
+    begin
+      SetProgress(100);
+      SetWorkFlag(false);
+    end;
   end
   else
-    Result := stNoSemafor;
+  begin    // Brodcast
+    PurgeInOut;
+    RsWrite(Buf,Count+2);
+    Result := stOk;
+  end;
+  SetLength(MyBuf,0);
 end;
 
 function  TDevItem.Konwers(var Buf; Count : byte; var RecLen : integer): TStatus;
@@ -1194,13 +1175,9 @@ procedure  TDevItem.BreakPulse;
 begin
   if ValidHandle then
   begin
-    if GetComAcces then
-    begin
-      SetCommBreak(ComHandle);
-      Sleep(10);
-      ClearCommBreak(ComHandle);
-      ReleaseComAcces;
-    end;
+    SetCommBreak(ComHandle);
+    Sleep(10);
+    ClearCommBreak(ComHandle);
   end;
 end;
 
@@ -1270,8 +1247,6 @@ const
   ToSetParamStr : string = 'DIVIDE_LEN;DRIVER_MODE;RS485_WAIT;CLR_RDCNT;';
   ToGetParamStr : string = 'REPEAT_CNT;FRAME_CNT;WAIT_CNT;RECIVE_TIME;SEND_TIME;DIVIDE_LEN;DRIVER_MODE;RS485_WAIT;CLR_RDCNT;';
 
-
-
 function  GetDrvParamList(ToSet : boolean): pchar; stdcall;
 begin
   if ToSet then
@@ -1279,8 +1254,6 @@ begin
   else
     Result := pchar(ToGetParamStr)
 end;
-
-
 
 procedure TDevItem.RegisterCallBackFun(ACallBackFunc : TCallBackFunc; CmmId : integer);
 begin
@@ -1652,6 +1625,7 @@ end;
     Q[8]:=Count;
 
     RecLen:=Count+5;
+
     Result:=Konwers(Q,9,QA,RecLen);
     if Result=stOk then
       if not((QA[0]=FDevNr) and (QA[1]=100)) then
@@ -1679,6 +1653,7 @@ begin
     Cnt:=Count-SCnt;
     if Cnt>FCountDivide then
       Cnt := FCountDivide;
+    fillchar(QA,sizeof(qA),0);
     st := RdMemoryHd(FDevNr,Adress,Cnt,QA);
     if st=stOk then
     begin
@@ -1894,22 +1869,22 @@ begin
 end;
 
 
-//---------------------  TDevAcces ---------------------------
-constructor TDevAcces.Create;
+//---------------------  TPortList ---------------------------
+constructor TPortList.Create;
 begin
   inherited Create;
-  FCurrId := TAccId(1);
+  FCurrId := TPortId(1);
   InitializeCriticalSection(FCriSection);
 end;
 
 
-destructor  TDevAcces.Destroy;
+destructor  TPortList.Destroy;
 begin
   DeleteCriticalSection(FCriSection);
   inherited;
 end;
 
-function TDevAcces.GetBoudRate(BdTxt: shortstring; var Baund :TBaudRate) : boolean;
+function TPortList.GetBoudRate(BdTxt: shortstring; var Baund :TBaudRate) : boolean;
 begin
   Result := True;
        if BdTxt= '110'    then Baund := br110
@@ -1928,7 +1903,7 @@ begin
   else Result := false;
 end;
 
-function TDevAcces.GetMdbMode(BdTxt: shortstring; var MdbMode:TMdbMode) : boolean;
+function TPortList.GetMdbMode(BdTxt: shortstring; var MdbMode:TMdbMode) : boolean;
 begin
   Result := True;
        if BdTxt= 'RTU'    then MdbMode := mdbRTU
@@ -1936,7 +1911,7 @@ begin
   else Result := false;
 end;
 
-function TDevAcces.GetParity(BdTxt: shortstring; var Parity:TParity) : boolean;
+function TPortList.GetParity(BdTxt: shortstring; var Parity:TParity) : boolean;
 begin
   Result := True;
        if BdTxt= 'N'  then Parity := paNONE
@@ -1945,7 +1920,7 @@ begin
   else Result := false;
 end;
 
-function TDevAcces.GetTocken(s : pChar; var p: integer):shortstring;
+function TPortList.GetTocken(s : pChar; var p: integer):shortstring;
 begin
   Result :='';
   while (s[p]<>';') and (s[p]<>#0) and (p<=length(s)) do
@@ -1956,7 +1931,7 @@ begin
   inc(p);
 end;
 
-function TDevAcces.GetId:TAccId;
+function TPortList.GetId:TPortId;
 begin
   Result := FCurrId;
   inc(FCurrId);
@@ -1965,7 +1940,7 @@ end;
 //  MCOM;nr_rs;nr_dev;rs_speed;[ASCII|RTU];[N|E|O]
 //  MCOM;1;7;115200;RTU;N
 
-function TDevAcces.AddAcc(ConnectStr : pchar): TAccId;
+function TPortList.AddPort(ConnectStr : pchar): TPortId;
 var
   s       : shortstring;
   p       : integer;
@@ -2028,7 +2003,7 @@ begin
         EnterCriticalSection(FCriSection);
         Devitem := TDevItem.Create(GetId,ComNr,DevNr,BaudRate,MdbMode,Parity);
         Add(DevItem);
-        Result := DevItem.AccID;
+        Result := DevItem.PortId;
       finally
         LeaveCriticalSection(FCriSection);
       end;
@@ -2037,7 +2012,7 @@ begin
 end;
 
 
-function TDevAcces.DelAcc(AccId : TAccId):TStatus;
+function TPortList.DelPort(PortId : TPortId):TStatus;
 var
   i : integer;
   T : TDevItem;
@@ -2048,7 +2023,7 @@ begin
     for i:=0 to Count-1 do
     begin
       T := TDevItem(Items[i]);
-      if T.AccID=AccId then
+      if T.PortId=PortId then
       begin
         T.Close;
         Delete(i);
@@ -2062,20 +2037,20 @@ begin
   end;
 end;
 
-function TDevAcces.FindId(AccId : TAccId):TDevItem;
+function TPortList.FindId(PortId : TPortId):TDevItem;
 var
   i : integer;
   T : TDevItem;
 begin
   Result := nil;
-  if AccId>=0 then
+  if PortId>=0 then
   begin
     try
       EnterCriticalSection(FCriSection);
       for i:=0 to Count-1 do
       begin
         T := TDevItem(Items[i]);
-        if T.AccID=AccId then
+        if T.PortId=PortId then
         begin
           Result := T;
           Break;
@@ -2111,67 +2086,67 @@ begin
   EmulateVer := Ver;
 end;
 
-function AddDev(ConnectStr : pchar): TAccId; stdcall;
+function AddDev(ConnectStr : pchar): TPortId; stdcall;
 begin
-  Result := GlobDevAcces.AddAcc(ConnectStr);
+  Result := GlobPortList.AddPort(ConnectStr);
 end;
 
-function DelDev(Id :TAccId):TStatus; stdcall;
+function DelDev(Id :TPortId):TStatus; stdcall;
 begin
-  Result := GlobDevAcces.DelAcc(Id);
+  Result := GlobPortList.DelPort(Id);
 end;
 
-function  GetDrvStatus(Id :TAccId; ParamName : pchar; ParamValue :pchar; MaxRpl:integer): TStatus; stdcall;
+function  GetDrvStatus(Id :TPortId; ParamName : pchar; ParamValue :pchar; MaxRpl:integer): TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
     Result := Dev.GetDrvStatus(ParamName,ParamValue,MaxRpl)
   else
     Result := stBadId;
 end;
 
-function  SetDrvParam(Id :TAccId; ParamName : pchar; ParamValue :pchar): TStatus; stdcall;
+function  SetDrvParam(Id :TPortId; ParamName : pchar; ParamValue :pchar): TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
     Result := Dev.SetDrvParam(ParamName,ParamValue)
   else
     Result := stBadId;
 end;
 
-function  SetBreakFlag(Id :TAccId; Val:boolean): TStatus; stdcall;
+function  SetBreakFlag(Id :TPortId; Val:boolean): TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
     Result := Dev.SetBreakFlag(Val)
   else
     Result := stBadId;
 end;
 
-function  GetPortHandle(Id :TAccId): THandle;  stdcall;
+function  GetPortHandle(Id :TPortId): THandle;  stdcall;
 var
   Dev : TDevItem;
 begin
   Result := INVALID_HANDLE_VALUE;
-  if GlobDevAcces<>nil then
+  if GlobPortList<>nil then
   begin
-    Dev := GlobDevAcces.FindId(Id);
+    Dev := GlobPortList.FindId(Id);
     if Dev<>nil then
       Result := Dev.ComHandle;
   end
 end;
 
-function  RegisterCallBackFun(Id :TAccId; CmmId : integer; CallBackFunc : TCallBackFunc): TStatus; stdcall;
+function  RegisterCallBackFun(Id :TPortId; CmmId : integer; CallBackFunc : TCallBackFunc): TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
   begin
     Dev.RegisterCallBackFun(CallBackFunc,CmmId);
@@ -2181,33 +2156,33 @@ begin
     Result := stBadId;
 end;
 
-function OpenDev(Id :TAccId):TStatus; stdcall;
+function OpenDev(Id :TPortId):TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
     Result := Dev.Open
   else
     Result := stBadId;
 end;
 
-procedure  CloseDev(Id :TAccId); stdcall;
+procedure  CloseDev(Id :TPortId); stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
   begin
     Dev.Close;
   end;
 end;
 
-function GetDevNr(Id :TAccId):byte; stdcall;
+function GetDevNr(Id :TPortId):byte; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
     Result := Dev.DevNr
   else
@@ -2215,11 +2190,11 @@ begin
 end;
 
 // Funkcje standardowe Modbus
-function  RdOutTable(Id :TAccId; var Buf; Adress : word; Count :word):TStatus; stdcall;
+function  RdOutTable(Id :TPortId; var Buf; Adress : word; Count :word):TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
   begin
     Result := Dev.RdOutTable(Buf,Adress,Count);
@@ -2228,11 +2203,11 @@ begin
     Result := stBadId;
 end;
 
-function  RdInpTable(Id :TAccId; var Buf; Adress : word; Count :word):TStatus; stdcall;
+function  RdInpTable(Id :TPortId; var Buf; Adress : word; Count :word):TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
   begin
     Result := Dev.RdInpTable(Buf,Adress,Count);
@@ -2241,11 +2216,11 @@ begin
     Result := stBadId;
 end;
 
-function  RdReg(Id :TAccId; var Buf; Adress : word; Count :word):TStatus; stdcall;
+function  RdReg(Id :TPortId; var Buf; Adress : word; Count :word):TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
   begin
     Result := Dev.RdReg(Buf,Adress,Count);
@@ -2254,11 +2229,11 @@ begin
     Result := stBadId;
 end;
 
-function  RdAnalogInp(Id :TAccId; var Buf; Adress : word; Count :word):TStatus; stdcall;
+function  RdAnalogInp(Id :TPortId; var Buf; Adress : word; Count :word):TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
   begin
     Result := Dev.RdAnalogInp(Buf,Adress,Count);
@@ -2267,11 +2242,11 @@ begin
     Result := stBadId;
 end;
 
-function  WrOutput(Id :TAccId; Adress : word; Val : word):TStatus; stdcall;
+function  WrOutput(Id :TPortId; Adress : word; Val : word):TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
   begin
     Result := Dev.WrOutput(Adress,Val<>0);
@@ -2280,11 +2255,11 @@ begin
     Result := stBadId;
 end;
 
-function  WrReg(Id :TAccId; Adress : word; Val : word):TStatus; stdcall;
+function  WrReg(Id :TPortId; Adress : word; Val : word):TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
   begin
     Result := Dev.WrReg(Adress,Val);
@@ -2293,11 +2268,11 @@ begin
     Result := stBadId;
 end;
 
-function  WrMultiReg(Id :TAccId; var Buf; Adress : word; Count :word):TStatus; stdcall;
+function  WrMultiReg(Id :TPortId; var Buf; Adress : word; Count :word):TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
   begin
     Result := Dev.WrMultiReg(Buf,Adress,Count);
@@ -2308,22 +2283,22 @@ end;
 
 // Funkcje odczytu, zapisu pamiêci
 
-function ReadMem(Id :TAccId; var Buffer; adr : Cardinal; size : Cardinal): TStatus; stdcall;
+function ReadMem(Id :TPortId; var Buffer; adr : Cardinal; size : Cardinal): TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
     Result := Dev.RdMemory(Buffer,Adr,Size)
   else
     Result := stBadId;
 end;
 
-function WriteMem(Id :TAccId; var Buffer; adr : Cardinal; Size : Cardinal): TStatus; stdcall;
+function WriteMem(Id :TPortId; var Buffer; adr : Cardinal; Size : Cardinal): TStatus; stdcall;
 var
   Dev : TDevItem;
 begin
-  Dev := GlobDevAcces.FindId(Id);
+  Dev := GlobPortList.FindId(Id);
   if Dev<>nil then
     Result := Dev.WrMemory(Buffer,Adr,Size)
   else
@@ -2331,7 +2306,7 @@ begin
 end;
 
 
-function  GetErrStr(Id :TAccId; Code :TStatus; S : pChar; Max: integer): boolean;  stdcall;
+function  GetErrStr(Id :TPortId; Code :TStatus; S : pChar; Max: integer): boolean;  stdcall;
 var
   Dev : TDevItem;
 begin
@@ -2365,7 +2340,7 @@ begin
   end;
   if not(Result) then
   begin
-    Dev := GlobDevAcces.FindId(Id);
+    Dev := GlobPortList.FindId(Id);
     if Dev<>nil then
       Result := Dev.GetErrStr(Code,S,Max);
   end;
@@ -2379,10 +2354,10 @@ end;
 
 
 initialization
-  GlobDevAcces := TDevAcces.Create;
+  GlobPortList := TPortList.Create;
   IsMultiThread := True;  // Make memory manager thread safe
 
   EmulateVer := 0;
 finalization
-  GlobDevAcces.Free;
+  GlobPortList.Free;
 end.

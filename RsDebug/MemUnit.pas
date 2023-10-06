@@ -93,7 +93,8 @@ type
     procedure ReloadMapParser; override;
     function  GetDefaultCaption : string; override;
 
-    procedure ShowMem(Adr : integer);
+    procedure ShowMem(Adr : integer); overload;
+    procedure ShowMem(const AdrCpx1 : TAdrCpx); overload;
   end;
 
 var
@@ -543,6 +544,16 @@ begin
   AdresBox.Text := MapParser.IntToVarName(Adr);
   ReadMemAct.Execute;
   ShowParamAct.Execute;
+end;
+
+procedure TMemForm.ShowMem(const AdrCpx1 : TAdrCpx);
+begin
+  ShowMem(AdrCpx1.Adres);
+  SetArea(AdrCpx1.AreaName);
+  Title := AdrCpx1.Caption;
+  ShowCaption;
+  SizeBox.Text := Format('0x%X',[AdrCpx1.Size]);
+
 end;
 
 

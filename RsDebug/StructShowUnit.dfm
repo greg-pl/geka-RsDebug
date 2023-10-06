@@ -1,8 +1,8 @@
 inherited StructShowForm: TStructShowForm
-  Left = 1050
-  Top = 159
+  Left = 351
+  Top = 76
   Width = 512
-  Height = 416
+  Height = 417
   Caption = 'StructShowForm'
   OldCreateOrder = True
   Position = poDefaultPosOnly
@@ -12,8 +12,8 @@ inherited StructShowForm: TStructShowForm
   object StructTreeView: TTreeView [0]
     Left = 0
     Top = 89
-    Width = 504
-    Height = 281
+    Width = 496
+    Height = 270
     Align = alClient
     Font.Charset = EASTEUROPE_CHARSET
     Font.Color = clWindowText
@@ -38,23 +38,23 @@ inherited StructShowForm: TStructShowForm
     OnKeyPress = StructTreeViewKeyPress
   end
   inherited StatusBar: TStatusBar
-    Top = 370
-    Width = 504
+    Top = 359
+    Width = 496
   end
   inherited ToolBar1: TToolBar
-    Width = 504
+    Width = 496
     object RdMemBtn: TToolButton
-      Left = 201
+      Left = 178
       Top = 0
       Action = ReadMemAct
     end
     object AutoRepBtn: TToolButton
-      Left = 224
+      Left = 201
       Top = 0
       Action = AutoReadAct
     end
     object ToolButton1: TToolButton
-      Left = 247
+      Left = 224
       Top = 0
       Width = 18
       Caption = 'ToolButton1'
@@ -63,7 +63,7 @@ inherited StructShowForm: TStructShowForm
     end
   end
   inherited ParamPanel: TPanel
-    Width = 504
+    Width = 496
     Height = 60
     object Label1: TLabel
       Left = 8
@@ -208,7 +208,8 @@ inherited StructShowForm: TStructShowForm
       Action = EditTitleAct
     end
     object Closewindow1: TMenuItem
-      Action = CloseWinAct
+      Caption = 'Close window'
+      ImageIndex = 0
     end
   end
   object ActionList1: TActionList [5]

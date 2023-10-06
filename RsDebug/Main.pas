@@ -20,6 +20,7 @@ uses
   WavGenUnit,
   UpLoadDefUnit,
   WrtControlUnit,
+  RfcUnit,
   About,
   Registry,
   ExtGMemoUnit, ImgList;
@@ -122,6 +123,8 @@ type
     actRZ40EventReader: TAction;
     N4: TMenuItem;
     Rz40EventReader1: TMenuItem;
+    RfcWinAct: TAction;
+    RfcExecute1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure OpenCloseDevActExecute(Sender: TObject);
@@ -168,6 +171,7 @@ type
     procedure MemRegistersActExecute(Sender: TObject);
     procedure IsModbusStdActExecute(Sender: TObject);
     procedure actRZ40EventReaderExecute(Sender: TObject);
+    procedure RfcWinActExecute(Sender: TObject);
   private
     function  GetDev : TCmmDevice;
     procedure Msg(s :string);
@@ -728,8 +732,7 @@ var
 begin
   Win := TMemForm.CreateIterf(self,self);
   AdrCpx1 := PAdrCpx(Msg.WParam)^;
-  Win.SetArea(AdrCpx1.AreaName);
-  Win.ShowMem(AdrCpx1.Adres);
+  Win.ShowMem(AdrCpx1);
 end;
 
 procedure TMainForm.WMShowStruct(var Msg: TMessage);
@@ -872,6 +875,7 @@ begin
     if WinType='TRegMemForm'      then Dlg := TRegMemForm.CreateIterf(self,self);
     if WinType='TBinaryMemForm'   then Dlg := TBinaryMemForm.CreateIterf(self,self);
     if WinType='TRz40EventsForm'  then Dlg := TRz40EventsForm.CreateIterf(self,self);
+    if WinType='TRfcForm'         then Dlg := TRfcForm.CreateIterf(self,self);
 
     if Dlg<>nil then
     begin
@@ -1274,6 +1278,11 @@ end;
 procedure TMainForm.actRZ40EventReaderExecute(Sender: TObject);
 begin
   TRz40EventsForm.CreateIterf(self,self);
+end;
+
+procedure TMainForm.RfcWinActExecute(Sender: TObject);
+begin
+  TRfcForm.CreateIterf(self,self);
 end;
 
 end.

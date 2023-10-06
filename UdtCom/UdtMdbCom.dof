@@ -115,7 +115,7 @@ AutoIncBuild=1
 MajorVer=1
 MinorVer=0
 Release=0
-Build=131
+Build=137
 Debug=0
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=1250
 [Version Info Keys]
 CompanyName=
 FileDescription=
-FileVersion=1.0.0.131
+FileVersion=1.0.0.137
 InternalName=
 LegalCopyright=
 LegalTrademarks=
@@ -138,9 +138,10 @@ Comments=
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=2
-Item0=$(ETROOT)\dcompGK;$(ETROOT)\dcompGK\GkComp
-Item1=C:\ProgramFilesGK\Borland\Delphi7\Source\Vcl
+Count=3
+Item0=Y:\dcompGK\DelphiWykres;Y:\dcompGK
+Item1=$(ETROOT)\dcompGK;$(ETROOT)\dcompGK\GkComp
+Item2=C:\ProgramFilesGK\Borland\Delphi7\Source\Vcl
 [HistoryLists\hlUnitOutputDirectory]
 Count=1
 Item0=DCU

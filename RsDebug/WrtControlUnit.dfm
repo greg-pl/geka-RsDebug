@@ -1,6 +1,6 @@
 inherited WrtControlForm: TWrtControlForm
-  Left = 577
-  Top = 442
+  Left = 1642
+  Top = 522
   VertScrollBar.Range = 0
   AutoSize = True
   BorderIcons = [biSystemMenu, biMinimize]
@@ -9,8 +9,8 @@ inherited WrtControlForm: TWrtControlForm
   Caption = 'WrtControlForm'
   ClientHeight = 211
   ClientWidth = 302
-  Constraints.MaxHeight = 240
-  Constraints.MaxWidth = 312
+  Constraints.MaxHeight = 252
+  Constraints.MaxWidth = 320
   Constraints.MinHeight = 240
   Constraints.MinWidth = 312
   OldCreateOrder = True
@@ -27,17 +27,17 @@ inherited WrtControlForm: TWrtControlForm
       Visible = False
     end
     object RdSemafBtn: TToolButton
-      Left = 201
+      Left = 178
       Top = 0
       Action = RdSemafAct
     end
     object WrSemafBtn: TToolButton
-      Left = 224
+      Left = 201
       Top = 0
       Action = WrSemafAct
     end
     object ToolButton5: TToolButton
-      Left = 247
+      Left = 224
       Top = 0
       Width = 8
       Caption = 'ToolButton5'
@@ -45,7 +45,7 @@ inherited WrtControlForm: TWrtControlForm
       Style = tbsSeparator
     end
     object RdSignBtn: TToolButton
-      Left = 255
+      Left = 232
       Top = 0
       Action = RdVecAct
     end
@@ -215,7 +215,8 @@ inherited WrtControlForm: TWrtControlForm
       Action = EditTitleAct
     end
     object Closewindow1: TMenuItem
-      Action = CloseWinAct
+      Caption = 'Close window'
+      ImageIndex = 0
     end
   end
   inherited ToolBarImgList: TImageList

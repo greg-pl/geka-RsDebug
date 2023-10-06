@@ -531,7 +531,7 @@ object AnalogFrame: TAnalogFrame
         object Label2: TLabel
           Left = 0
           Top = 0
-          Width = 113
+          Width = 71
           Height = 13
           Align = alTop
           Caption = 'Ilo'#347#263' wektor'#243'w'

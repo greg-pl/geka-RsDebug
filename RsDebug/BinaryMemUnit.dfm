@@ -10,51 +10,51 @@ inherited BinaryMemForm: TBinaryMemForm
   inline MemFrame: TBinaryFrame [0]
     Left = 0
     Top = 65
-    Width = 794
-    Height = 328
+    Width = 786
+    Height = 316
     Align = alClient
     TabOrder = 0
     inherited ByteGrid: TStringGrid
-      Width = 794
-      Height = 295
+      Width = 786
+      Height = 283
     end
     inherited ByteGridPanel: TPanel
-      Width = 794
+      Width = 786
     end
   end
   inherited StatusBar: TStatusBar [1]
-    Top = 393
-    Width = 794
+    Top = 381
+    Width = 786
   end
   inherited ToolBar1: TToolBar [2]
-    Width = 794
+    Width = 786
     TabOrder = 2
     inherited AreaSelect: TComboBox
       Visible = False
     end
     object ReadMemBtn: TToolButton
-      Left = 201
+      Left = 178
       Top = 0
       Action = ReadMemAct
     end
     object ToolButton4: TToolButton
-      Left = 224
+      Left = 201
       Top = 0
       Action = RdNextAct
     end
     object ToolButton5: TToolButton
-      Left = 247
+      Left = 224
       Top = 0
       Action = RdBackAct
     end
     object AutoRepBtn: TToolButton
-      Left = 270
+      Left = 247
       Top = 0
       Action = AutoRepAct
       Style = tbsCheck
     end
     object ToolButton6: TToolButton
-      Left = 293
+      Left = 270
       Top = 0
       Width = 12
       Caption = 'ToolButton6'
@@ -62,17 +62,17 @@ inherited BinaryMemForm: TBinaryMemForm
       Style = tbsSeparator
     end
     object WrMemBtn: TToolButton
-      Left = 305
+      Left = 282
       Top = 0
       Action = WrMemAct
     end
     object ToolButton1: TToolButton
-      Left = 328
+      Left = 305
       Top = 0
       Action = SaveBufAct
     end
     object ToolButton7: TToolButton
-      Left = 351
+      Left = 328
       Top = 0
       Width = 8
       Caption = 'ToolButton7'
@@ -80,17 +80,17 @@ inherited BinaryMemForm: TBinaryMemForm
       Style = tbsSeparator
     end
     object ToolButton2: TToolButton
-      Left = 359
+      Left = 336
       Top = 0
       Action = FillFFAct
     end
     object ToolButton8: TToolButton
-      Left = 382
+      Left = 359
       Top = 0
       Action = FillZeroAct
     end
     object ToolButton9: TToolButton
-      Left = 405
+      Left = 382
       Top = 0
       Width = 8
       Caption = 'ToolButton9'
@@ -98,22 +98,22 @@ inherited BinaryMemForm: TBinaryMemForm
       Style = tbsSeparator
     end
     object ToolButton10: TToolButton
-      Left = 413
+      Left = 390
       Top = 0
       Action = SaveMemAct
     end
     object ToolButton14: TToolButton
-      Left = 436
+      Left = 413
       Top = 0
       Action = SaveMemTxtAct
     end
     object ToolButton11: TToolButton
-      Left = 459
+      Left = 436
       Top = 0
       Action = LoadMemAct
     end
     object ToolButton12: TToolButton
-      Left = 482
+      Left = 459
       Top = 0
       Width = 22
       Caption = 'ToolButton12'
@@ -122,7 +122,7 @@ inherited BinaryMemForm: TBinaryMemForm
     end
   end
   inherited ParamPanel: TPanel [3]
-    Width = 794
+    Width = 786
     Height = 36
     TabOrder = 3
     object Label5: TLabel
@@ -200,7 +200,7 @@ inherited BinaryMemForm: TBinaryMemForm
   inherited ActionList2: TActionList [5]
     Left = 344
     Top = 216
-    object RdBackAct: TAction [2]
+    object RdBackAct: TAction
       Category = 'MemWin'
       Caption = 'RdBackAct'
       Hint = 'Read prev'

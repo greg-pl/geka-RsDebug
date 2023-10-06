@@ -34,7 +34,8 @@ uses
   BinaryFrameUnit in 'BinaryFrameUnit.pas' {BinaryFrame: TFrame},
   CommonDef in 'CommonDef.pas',
   Rz40EventsUnit in 'Rz40EventsUnit.pas' {Rz40EventsForm},
-  CrcUnit in 'CrcUnit.pas';
+  CrcUnit in 'CrcUnit.pas',
+  RfcUnit in 'RfcUnit.pas' {RfcForm};
 
 {$R *.res}
 

@@ -67,6 +67,8 @@ type
   TAdrCpx = record
     AreaName : string;
     Adres    : integer;
+    Size     : integer;
+    Caption  : string;
   end;
 
   TAreaDefItem = class (TObject)
@@ -548,7 +550,7 @@ begin
 
     s := IniFile.ReadString('MAIN_CFG','HISTSTR','');
     if s='' then
-      s := 'RTCP;10.20.0.1;8040|RCOM;%RS;255;115200|MCOM;%RS;1;115200|MCOM;%RS;1;115200|UCOM;%RS;1;115200';
+      s := 'RTCP;10.20.0.1;8040|RCOM;%RS;255;115200|MCOM;%RS;1;115200|MCOM;%RS;1;115200|UCOM;%RS;1;115200;RTU;E';
     HistDevStr.Delimiter := '"';
     HistDevStr.Delimiter := '|';
     HistDevStr.DelimitedText:=s;

@@ -77,7 +77,6 @@ type
     procedure FillFFActUpdate(Sender: TObject);
   private
     MemType   : TBinaryMemType;
-    MemBxLeft : integer;
     function  ReadMem : TStatus;
     function  WriteMem : TStatus;
     function  GetPhAdr(Adr : cardinal):cardinal;

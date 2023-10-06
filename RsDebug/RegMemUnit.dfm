@@ -1,6 +1,6 @@
 inherited RegMemForm: TRegMemForm
-  Left = 4078
-  Top = 134
+  Left = 1311
+  Top = 1056
   Width = 708
   Height = 504
   Caption = 'RegMemForm'

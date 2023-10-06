@@ -1,8 +1,8 @@
 object EditTypeItemForm: TEditTypeItemForm
   Left = 727
   Top = 413
-  Width = 305
-  Height = 220
+  Width = 333
+  Height = 238
   Caption = 'EditTypeItemForm'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET

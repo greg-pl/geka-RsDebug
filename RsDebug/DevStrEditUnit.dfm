@@ -1,6 +1,6 @@
 object DevStrEditForm: TDevStrEditForm
-  Left = 732
-  Top = 412
+  Left = -1060
+  Top = 313
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Spos'#243'b po'#322#261'czenia'

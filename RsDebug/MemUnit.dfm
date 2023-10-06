@@ -1,6 +1,6 @@
 inherited MemForm: TMemForm
-  Left = 4078
-  Top = 134
+  Left = -4655
+  Top = 385
   Width = 623
   Height = 706
   Caption = 'MemForm'
@@ -17,18 +17,17 @@ inherited MemForm: TMemForm
     inherited ShowTypePageCtrl: TPageControl
       Width = 607
       Height = 559
-      ActivePage = MemFrame.ChartSheet
       PopupMenu = GridPopUp
       TabStop = False
       OnChange = MemFrameShowTypePageCtrlChange
       inherited ByteSheet: TTabSheet
         inherited ByteGrid: TStringGrid
-          Width = 594
-          Height = 245
+          Width = 599
+          Height = 500
           PopupMenu = GridPopUp
         end
         inherited ByteGridPanel: TPanel
-          Width = 594
+          Width = 599
         end
       end
       inherited WordSheet: TTabSheet
@@ -119,28 +118,28 @@ inherited MemForm: TMemForm
     Width = 607
     TabOrder = 2
     object ReadMemBtn: TToolButton
-      Left = 201
+      Left = 178
       Top = 0
       Action = ReadMemAct
     end
     object ToolButton4: TToolButton
-      Left = 224
+      Left = 201
       Top = 0
       Action = RdNextAct
     end
     object ToolButton5: TToolButton
-      Left = 247
+      Left = 224
       Top = 0
       Action = RdBackAct
     end
     object AutoRepBtn: TToolButton
-      Left = 270
+      Left = 247
       Top = 0
       Action = AutoRepAct
       Style = tbsCheck
     end
     object ToolButton6: TToolButton
-      Left = 293
+      Left = 270
       Top = 0
       Width = 12
       Caption = 'ToolButton6'
@@ -148,17 +147,17 @@ inherited MemForm: TMemForm
       Style = tbsSeparator
     end
     object WrMemBtn: TToolButton
-      Left = 305
+      Left = 282
       Top = 0
       Action = WrMemAct
     end
     object ToolButton1: TToolButton
-      Left = 328
+      Left = 305
       Top = 0
       Action = SaveBufAct
     end
     object ToolButton7: TToolButton
-      Left = 351
+      Left = 328
       Top = 0
       Width = 8
       Caption = 'ToolButton7'
@@ -166,22 +165,22 @@ inherited MemForm: TMemForm
       Style = tbsSeparator
     end
     object ToolButton2: TToolButton
-      Left = 359
+      Left = 336
       Top = 0
       Action = FillFFAct
     end
     object ToolButton8: TToolButton
-      Left = 382
+      Left = 359
       Top = 0
       Action = FillZeroAct
     end
     object ToolButton15: TToolButton
-      Left = 405
+      Left = 382
       Top = 0
       Action = FillxxAct
     end
     object FillValueEdit: TEdit
-      Left = 428
+      Left = 405
       Top = 0
       Width = 37
       Height = 22
@@ -189,7 +188,7 @@ inherited MemForm: TMemForm
       Text = '0x01'
     end
     object ToolButton9: TToolButton
-      Left = 465
+      Left = 442
       Top = 0
       Width = 8
       Caption = 'ToolButton9'
@@ -197,22 +196,22 @@ inherited MemForm: TMemForm
       Style = tbsSeparator
     end
     object ToolButton10: TToolButton
-      Left = 473
+      Left = 450
       Top = 0
       Action = SaveMemAct
     end
     object ToolButton14: TToolButton
-      Left = 496
+      Left = 473
       Top = 0
       Action = SaveMemTxtAct
     end
     object ToolButton11: TToolButton
-      Left = 519
+      Left = 496
       Top = 0
       Action = LoadMemAct
     end
     object ToolButton12: TToolButton
-      Left = 542
+      Left = 519
       Top = 0
       Width = 22
       Caption = 'ToolButton12'
@@ -326,7 +325,7 @@ inherited MemForm: TMemForm
   inherited ActionList2: TActionList [5]
     Left = 344
     Top = 216
-    object RdBackAct: TAction [2]
+    object RdBackAct: TAction
       Category = 'MemWin'
       Caption = 'RdBackAct'
       Hint = 'Read prev'

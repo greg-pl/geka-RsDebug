@@ -1,6 +1,6 @@
 inherited VarListForm: TVarListForm
-  Left = 502
-  Top = 387
+  Left = 168
+  Top = 184
   Width = 624
   Height = 457
   Caption = 'VarListForm'
@@ -12,13 +12,13 @@ inherited VarListForm: TVarListForm
     Left = 249
     Top = 57
     Width = 5
-    Height = 354
+    Height = 342
   end
   object ShowVarGrid: TStringGrid [1]
     Left = 254
     Top = 57
-    Width = 362
-    Height = 354
+    Width = 354
+    Height = 342
     Align = alClient
     ColCount = 6
     DefaultColWidth = 30
@@ -54,14 +54,14 @@ inherited VarListForm: TVarListForm
       18)
   end
   inherited StatusBar: TStatusBar
-    Top = 411
-    Width = 616
+    Top = 399
+    Width = 608
   end
   object ListPanel: TPanel [3]
     Left = 0
     Top = 57
     Width = 249
-    Height = 354
+    Height = 342
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'ListPanel'
@@ -70,7 +70,7 @@ inherited VarListForm: TVarListForm
       Left = 0
       Top = 33
       Width = 249
-      Height = 321
+      Height = 309
       Align = alClient
       Columns = <
         item
@@ -151,27 +151,27 @@ inherited VarListForm: TVarListForm
     end
   end
   inherited ToolBar1: TToolBar
-    Width = 616
+    Width = 608
     inherited AreaSelect: TComboBox
       Width = 89
       Style = csDropDownList
       Text = ''
     end
     inherited ToolButton13: TToolButton
-      Left = 170
+      Left = 147
     end
     object AutoReadBtn: TToolButton
-      Left = 186
+      Left = 163
       Top = 0
       Action = ReadVarAct
     end
     object ToolButton2: TToolButton
-      Left = 209
+      Left = 186
       Top = 0
       Action = AutoReadAct
     end
     object ToolButton1: TToolButton
-      Left = 232
+      Left = 209
       Top = 0
       Width = 8
       Caption = 'ToolButton1'
@@ -179,13 +179,13 @@ inherited VarListForm: TVarListForm
       Style = tbsSeparator
     end
     object ShowVarPanelBtn: TToolButton
-      Left = 240
+      Left = 217
       Top = 0
       Action = ShowVarPanelAct
       Style = tbsCheck
     end
     object ToolButton4: TToolButton
-      Left = 263
+      Left = 240
       Top = 0
       Width = 27
       Caption = 'ToolButton4'
@@ -193,7 +193,7 @@ inherited VarListForm: TVarListForm
       Style = tbsSeparator
     end
     object SaveItemsBtn: TToolButton
-      Left = 290
+      Left = 267
       Top = 0
       Hint = 'Zapisz definicj'#281' zmiennych'
       Caption = 'SaveItemsBtn'
@@ -201,7 +201,7 @@ inherited VarListForm: TVarListForm
       OnClick = SaveItemsBtnClick
     end
     object AddItemsBtn: TToolButton
-      Left = 313
+      Left = 290
       Top = 0
       Hint = 'Dodaj zmienne z pliku'
       Caption = 'AddItemsBtn'
@@ -210,7 +210,7 @@ inherited VarListForm: TVarListForm
     end
   end
   inherited ParamPanel: TPanel
-    Width = 616
+    Width = 608
     Height = 28
     object Label6: TLabel
       Left = 11
@@ -520,7 +520,6 @@ inherited VarListForm: TVarListForm
       Action = EditTitleAct
     end
     object Closewindow1: TMenuItem
-      Action = CloseWinAct
     end
     object N1: TMenuItem
       Caption = '-'

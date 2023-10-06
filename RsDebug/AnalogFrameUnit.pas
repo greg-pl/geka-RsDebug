@@ -670,7 +670,6 @@ procedure TAnalogFrame.WordSheetShow(Sender: TObject);
 var
   i   : cardinal;
   x,y : integer;
-  Val : OleVariant;
   NN  : integer;
 begin
   NN := WordColCntEdit.Value;

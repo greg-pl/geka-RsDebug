@@ -1,8 +1,8 @@
 object EditVarItemForm: TEditVarItemForm
   Left = 727
   Top = 356
-  Width = 305
-  Height = 236
+  Width = 321
+  Height = 259
   BorderIcons = [biSystemMenu]
   Caption = 'EditVarItemForm'
   Color = clBtnFace

@@ -1,11 +1,15 @@
 inherited TerminalForm: TTerminalForm
   Left = 489
   Top = 581
+  Width = 478
+  Height = 510
   Caption = 'TerminalForm'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited StatusBar: TStatusBar
+    Top = 452
+    Width = 462
     Panels = <
       item
         Style = psOwnerDraw
@@ -26,6 +30,7 @@ inherited TerminalForm: TTerminalForm
       end>
   end
   inherited ToolBar1: TToolBar
+    Width = 462
     inherited AreaSelect: TComboBox
       Visible = False
     end
@@ -49,6 +54,7 @@ inherited TerminalForm: TTerminalForm
     end
   end
   inherited ParamPanel: TPanel
+    Width = 462
     object Label5: TLabel
       Left = 12
       Top = 8
@@ -90,8 +96,8 @@ inherited TerminalForm: TTerminalForm
   object TermMemo: TMemo [3]
     Left = 0
     Top = 70
-    Width = 419
-    Height = 212
+    Width = 462
+    Height = 382
     Align = alClient
     Color = clBlue
     Font.Charset = EASTEUROPE_CHARSET

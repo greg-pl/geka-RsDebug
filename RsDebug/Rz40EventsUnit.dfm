@@ -1,9 +1,16 @@
 inherited Rz40EventsForm: TRz40EventsForm
+  Width = 591
+  Height = 494
   Caption = 'Rz40EventsForm'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
+  inherited StatusBar: TStatusBar
+    Top = 436
+    Width = 575
+  end
   inherited ToolBar1: TToolBar
+    Width = 575
     object ToolButton1: TToolButton
       Left = 201
       Top = 0
@@ -40,6 +47,7 @@ inherited Rz40EventsForm: TRz40EventsForm
     end
   end
   inherited ParamPanel: TPanel
+    Width = 575
     object Label5: TLabel
       Left = 4
       Top = 16
@@ -76,8 +84,8 @@ inherited Rz40EventsForm: TRz40EventsForm
   object Memo: TMemo [3]
     Left = 0
     Top = 70
-    Width = 419
-    Height = 212
+    Width = 575
+    Height = 366
     Align = alClient
     Font.Charset = EASTEUROPE_CHARSET
     Font.Color = clWindowText

@@ -23,9 +23,7 @@ type
     StatusBar: TStatusBar;
     ActionList2: TActionList;
     EditTitleAct: TAction;
-    CloseWinAct: TAction;
     ToolBar1: TToolBar;
-    CloswWinBtn: TToolButton;
     TitleBtn: TToolButton;
     ToolButton3: TToolButton;
     ParamPanel: TPanel;
@@ -40,7 +38,6 @@ type
       Panel: TStatusPanel; const Rect: TRect);
     procedure EditTitleActExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure CloseWinActExecute(Sender: TObject);
     procedure ShowParamActExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure AreaSelectChange(Sender: TObject);
@@ -48,7 +45,6 @@ type
   private
     FTrnLamp : boolean;
     FProgress: real;
-    CloseAction : TCloseAction;
     MainWinInterf  : IMainWinInterf;
     procedure DrawtrnLamp;
     procedure DrawProgress;
@@ -95,7 +91,6 @@ end;
 
 procedure TChildForm.FormCreate(Sender: TObject);
 begin
-  CloseAction := caMinimize;
   AreaDefItem := TAreaDefItem.Create;
   ProgCfg.AreaDefList.LoadAreaNames(AreaSelect.Items);
   AreaSelect.ItemIndex := 0;
@@ -117,7 +112,7 @@ end;
 
 procedure TChildForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Action := CloseAction;
+  Action := caFree; 
 end;
 
 procedure TChildForm.DoMsg(s : string);
@@ -299,12 +294,6 @@ begin
   else
     Caption := GetDefaultCaption;
   PostMessage(Application.MainForm.Handle,wm_ChildCaption,integer(self),0);
-end;
-
-procedure TChildForm.CloseWinActExecute(Sender: TObject);
-begin
-  CloseAction := caFree;
-  Close;
 end;
 
 procedure TChildForm.ShowParamActExecute(Sender: TObject);
